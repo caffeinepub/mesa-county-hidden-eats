@@ -1,0 +1,21 @@
+{
+  "backend/main.mo": "Motoko actor defining a Restaurant type and Map-based storage with functions to add restaurants and search by name or cuisine.",
+  "feature_evidence.json": "Feature evidence report documenting five Western Colorado rustic aesthetic updates across frontend CSS, Tailwind config, Layout, DirectoryPage, and RestaurantCard components.",
+  "frontend-file-summaries.txt": "JSON-formatted summaries of frontend files describing the Western Colorado rustic theme implementation across components, pages, hooks, and configuration files.",
+  "frontend/index.css": "Tailwind CSS configuration with OKLCH color variables defining a Western Colorado rustic palette for light and dark modes including desert sand, canyon red, and sage brush tones.",
+  "frontend/index.html": "HTML entry point with viewport meta tags, title 'Mesa County Hidden Eats', and root div mounting the React application.",
+  "frontend/src/App.tsx": "React application root setting up TanStack Router with QueryClient provider, root route with Layout wrapper, and index route rendering DirectoryPage.",
+  "frontend/src/components/Layout.tsx": "Layout component with sticky header featuring Utensils icon and Mesa County branding, main content Outlet, and footer with copyright and caffeine.ai attribution.",
+  "frontend/src/components/RestaurantCard.tsx": "Card component displaying restaurant details with placeholder image, name with serif font, cuisine badge, description, location with MapPin icon, and contact with Phone icon.",
+  "frontend/src/components/RestaurantList.tsx": "Grid container rendering RestaurantCard components with loading skeletons and empty state message when no restaurants are found.",
+  "frontend/src/components/SearchBar.tsx": "Search interface with text input for restaurant name filtering and Select dropdown for cuisine type filtering from predefined cuisine list.",
+  "frontend/src/hooks/useActor.ts": "React Query hook managing backend actor creation with Internet Identity authentication, returning actor instance and invalidating dependent queries on identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides React context and hooks for Internet Identity authentication, managing login state, identity persistence, and delegation validation with configurable AuthClient options.",
+  "frontend/src/hooks/useQueries.ts": "Defines React Query hooks for fetching restaurant data including searching by name and cuisine type using the backend actor.",
+  "frontend/src/hooks/useRestaurantSearch.ts": "Combines name and cuisine search queries, merges results while avoiding duplicates, and applies combined filtering when both search parameters are present.",
+  "frontend/src/index.css": "Defines Tailwind CSS configuration with a Western Colorado rustic color palette using OKLCH format, featuring warm earthy tones like desert sand, canyon red, and sage brush for both light and dark modes.",
+  "frontend/src/main.tsx": "Application entry point that sets up React Query client and Internet Identity provider, then renders the root App component.",
+  "frontend/src/pages/DirectoryPage.tsx": "Main directory page component featuring a hero banner, search interface, and restaurant list with search and cuisine filtering capabilities.",
+  "frontend/tailwind.config.js": "Tailwind configuration defining custom color system using OKLCH format, typography with Lato and Merriweather fonts, and animation utilities for the Western Colorado rustic aesthetic.",
+  "project_state.json": "Project metadata tracking Mesa County Hidden Eats as a mobile-first restaurant directory with Western Colorado rustic aesthetic, documenting implemented features and architectural decisions."
+}

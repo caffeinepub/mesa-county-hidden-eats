@@ -1,0 +1,115 @@
+{
+  "kind": "build_request",
+  "title": "Apply Western Colorado rustic aesthetic with earthy tones",
+  "projectName": "Mesa County Hidden Eats",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-6",
+      "text": "Update the color palette in frontend/src/index.css to reflect a warm, rustic 'Western Colorado' aesthetic using earthy tones such as desert sand, canyon red, sage brush green, and weathered wood brown while maintaining the OKLCH color format",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-last"
+        ],
+        "quotes": [
+          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Color palette uses earthy Western Colorado-inspired tones (desert sand, canyon red, sage, weathered wood)",
+        "Colors remain in OKLCH format for consistency with existing implementation",
+        "Both light and dark mode variants are provided",
+        "New colors integrate seamlessly with existing components"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Update typography in frontend/tailwind.config.js to use clean, rustic-appropriate font selections that evoke a Western Colorado aesthetic while maintaining excellent readability",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-last"
+        ],
+        "quotes": [
+          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Typography choices complement the rustic Western Colorado theme",
+        "Font selections maintain clean, readable presentation",
+        "Font stack includes appropriate fallbacks for web safety"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Enhance frontend/src/components/Layout.tsx header and footer styling to reinforce the Western Colorado rustic aesthetic through subtle design touches such as border treatments or background textures",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-last"
+        ],
+        "quotes": [
+          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Header reflects rustic Western Colorado theme through visual styling",
+        "Footer maintains cohesive design language",
+        "Design enhancements are subtle and don't overwhelm content"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Update frontend/src/pages/DirectoryPage.tsx hero section to feature Western Colorado-inspired visual elements and messaging that emphasize the local rustic character",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-last"
+        ],
+        "quotes": [
+          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Hero section uses earthy color palette from updated theme",
+        "Visual presentation evokes Western Colorado rustic charm",
+        "Messaging emphasizes local character and discovery"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Refine frontend/src/components/RestaurantCard.tsx styling to incorporate rustic design elements such as warm borders, earthy backgrounds, and typography that aligns with the Western Colorado aesthetic",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-last"
+        ],
+        "quotes": [
+          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Restaurant cards feature rustic styling with warm, earthy tones",
+        "Card borders and backgrounds complement Western Colorado theme",
+        "Typography remains clean and readable while supporting rustic aesthetic"
+      ]
+    }
+  ],
+  "constraints": [
+    "Maintain existing OKLCH color format in CSS variables",
+    "Do not modify immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
+    "Preserve all existing functionality and component structure",
+    "Keep mobile-responsive design intact"
+  ],
+  "nonGoals": [
+    "Adding new restaurant features or functionality",
+    "Modifying backend data structures",
+    "Changing search or filtering logic",
+    "Adding new pages or routes"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

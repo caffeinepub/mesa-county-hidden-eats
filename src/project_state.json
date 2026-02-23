@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "A mobile-friendly directory app called 'Mesa County Hidden Eats' for discovering local restaurants and eateries",
+  "architectural_notes": [
+    "Mobile-first responsive design approach",
+    "Directory-style application for browsing local eateries",
+    "Warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-mobile-responsive-restaurant-directory-interface-that-displays-a-list-of-local-restaurants-and-eateries-with-their-basic-information-name-cuisine-type-brief-description",
+      "title": "Create a mobile-responsive restaurant directory interface that displays a list of local restaurants and eateries with their basic information (name, cuisine type, brief description)",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-search-functionality-that-allows-users-to-filter-restaurants-by-name-or-cuisine-type",
+      "title": "Add search functionality that allows users to filter restaurants by name or cuisine type",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-a-visually-cohesive-interface-with-a-warm-inviting-aesthetic-that-emphasizes-local-food-discovery-through-earthy-tones-appetizing-imagery-treatment-and-clear-typography-suitable-for-a-culinary-directory",
+      "title": "Design a visually cohesive interface with a warm, inviting aesthetic that emphasizes local food discovery through earthy tones, appetizing imagery treatment, and clear typography suitable for a culinary directory",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-generated-restaurant-placeholder-images-in-the-directory-using-static-assets-from-frontend-public-assets-generated",
+      "title": "Display generated restaurant placeholder images in the directory using static assets from frontend/public/assets/generated",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-color-palette-in-frontend-src-index-css-to-reflect-a-warm-rustic-western-colorado-aesthetic-using-earthy-tones-such-as-desert-sand-canyon-red-sage-brush-green-and-weathered-wood-brown-while-maintaining-the-oklch-color-format",
+      "title": "Update the color palette in frontend/src/index.css to reflect a warm, rustic 'Western Colorado' aesthetic using earthy tones such as desert sand, canyon red, sage brush green, and weathered wood brown while maintaining the OKLCH color format",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-typography-in-frontend-tailwind-config-js-to-use-clean-rustic-appropriate-font-selections-that-evoke-a-western-colorado-aesthetic-while-maintaining-excellent-readability",
+      "title": "Update typography in frontend/tailwind.config.js to use clean, rustic-appropriate font selections that evoke a Western Colorado aesthetic while maintaining excellent readability",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-frontend-src-components-layout-tsx-header-and-footer-styling-to-reinforce-the-western-colorado-rustic-aesthetic-through-subtle-design-touches-such-as-border-treatments-or-background-textures",
+      "title": "Enhance frontend/src/components/Layout.tsx header and footer styling to reinforce the Western Colorado rustic aesthetic through subtle design touches such as border treatments or background textures",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-pages-directorypage-tsx-hero-section-to-feature-western-colorado-inspired-visual-elements-and-messaging-that-emphasize-the-local-rustic-character",
+      "title": "Update frontend/src/pages/DirectoryPage.tsx hero section to feature Western Colorado-inspired visual elements and messaging that emphasize the local rustic character",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-refine-frontend-src-components-restaurantcard-tsx-styling-to-incorporate-rustic-design-elements-such-as-warm-borders-earthy-backgrounds-and-typography-that-aligns-with-the-western-colorado-aesthetic",
+      "title": "Refine frontend/src/components/RestaurantCard.tsx styling to incorporate rustic design elements such as warm borders, earthy backgrounds, and typography that aligns with the Western Colorado aesthetic",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create mobile-friendly directory app structure",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement restaurant/eatery listing functionality",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add search and filtering capabilities for directory",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Implement backend data model and storage for restaurant entries including fields for name, cuisine type, description, location, and contact information",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Mesa County Hidden Eats",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

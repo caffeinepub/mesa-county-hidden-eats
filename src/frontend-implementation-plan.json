@@ -1,0 +1,88 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Apply Western Colorado rustic aesthetic with earthy tones",
+  "requirements": [
+    {
+      "id": "REQ-6",
+      "summary": "Update color palette to reflect Western Colorado rustic aesthetic with earthy tones",
+      "acceptanceCriteria": [
+        "Color palette uses earthy Western Colorado-inspired tones (desert sand, canyon red, sage, weathered wood)",
+        "Colors remain in OKLCH format for consistency with existing implementation",
+        "Both light and dark mode variants are provided",
+        "New colors integrate seamlessly with existing components"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Replace existing color palette CSS variables with Western Colorado-inspired earthy tones: desert sand for backgrounds, canyon red for primary accents, sage brush green for secondary elements, and weathered wood brown for muted tones. Maintain OKLCH color format and provide both light and dark mode variants. Update --background, --foreground, --primary, --secondary, --accent, --muted, and --border variables to reflect the warm rustic aesthetic while preserving the existing OKLCH structure."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Update typography to use clean, rustic-appropriate fonts for Western Colorado aesthetic",
+      "acceptanceCriteria": [
+        "Typography choices complement the rustic Western Colorado theme",
+        "Font selections maintain clean, readable presentation",
+        "Font stack includes appropriate fallbacks for web safety"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Update the fontFamily configuration in the theme.extend section to use rustic-appropriate typefaces that evoke Western Colorado character while maintaining excellent readability. Select fonts with clean lines and natural warmth, such as serif fonts for headings and sans-serif fonts for body text. Include web-safe fallback fonts in each font stack (e.g., Georgia, system-ui, sans-serif)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Enhance Layout header and footer with Western Colorado rustic styling",
+      "acceptanceCriteria": [
+        "Header reflects rustic Western Colorado theme through visual styling",
+        "Footer maintains cohesive design language",
+        "Design enhancements are subtle and don't overwhelm content"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Update header styling to incorporate rustic design elements such as earthy background colors from the updated palette, subtle border treatments (e.g., border-b with warm tones), and enhanced typography. Update footer styling to maintain cohesive rustic aesthetic with warm background, subtle borders, and earthy text colors. Keep design enhancements subtle to avoid overwhelming content while reinforcing the Western Colorado character."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Update DirectoryPage hero section with Western Colorado-inspired visual elements",
+      "acceptanceCriteria": [
+        "Hero section uses earthy color palette from updated theme",
+        "Visual presentation evokes Western Colorado rustic charm",
+        "Messaging emphasizes local character and discovery"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/DirectoryPage.tsx",
+          "operation": "modify",
+          "description": "Enhance hero section styling to feature Western Colorado rustic aesthetic using the earthy color palette (canyon red, desert sand, sage tones). Update background colors, text colors, and border treatments to reflect rustic warmth. Refine messaging to emphasize local Mesa County character and hidden gem discovery. Apply subtle rustic design touches such as warm borders or earthy backgrounds that complement the overall theme."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Refine RestaurantCard styling with rustic design elements",
+      "acceptanceCriteria": [
+        "Restaurant cards feature rustic styling with warm, earthy tones",
+        "Card borders and backgrounds complement Western Colorado theme",
+        "Typography remains clean and readable while supporting rustic aesthetic"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/RestaurantCard.tsx",
+          "operation": "modify",
+          "description": "Update RestaurantCard styling to incorporate rustic design elements aligned with Western Colorado aesthetic. Apply warm earthy backgrounds (desert sand, weathered wood tones), update border styles with warm colors (canyon red accents or sage borders), and refine typography to use the updated rustic fonts. Ensure card styling uses the updated color palette variables and maintains clean, readable presentation while evoking rustic charm."
+        }
+      ]
+    }
+  ]
+}

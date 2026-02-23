@@ -1,0 +1,12 @@
+{
+  "frontend/src/App.tsx": "Main application component that sets up TanStack Router with a root layout and directory page route.",
+  "frontend/src/components/Layout.tsx": "Layout wrapper component with rustic-styled header featuring canyon red accents and serif typography, main content area with Outlet, and warm earthy footer with enhanced borders and attribution.",
+  "frontend/src/pages/DirectoryPage.tsx": "Main directory page with Western Colorado-themed hero banner featuring canyon red overlay, emphasized local discovery messaging with serif typography, search functionality, and restaurant list with loading and error states.",
+  "frontend/src/components/SearchBar.tsx": "Search component with text input for restaurant names and dropdown select for cuisine type filtering.",
+  "frontend/src/components/RestaurantList.tsx": "Container component that renders a responsive grid of restaurant cards with loading skeletons and empty state.",
+  "frontend/src/components/RestaurantCard.tsx": "Individual restaurant card with rustic styling including warm earthy backgrounds, canyon red accent borders on hover, serif typography for titles, and sage-toned badges with subtle borders.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching restaurant data from backend using searchByName and searchByCuisine methods.",
+  "frontend/src/hooks/useRestaurantSearch.ts": "Custom hook that coordinates name and cuisine search queries and combines results intelligently.",
+  "frontend/src/index.css": "Global styles with Western Colorado rustic OKLCH color palette featuring desert sand backgrounds, canyon red primary, sage brush secondary, and weathered wood muted tones for both light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with rustic Western Colorado color tokens, custom font families (Lato sans-serif and Merriweather serif), and maintaining the warm earthy aesthetic."
+}

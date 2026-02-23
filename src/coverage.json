@@ -1,0 +1,86 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-23T05:22:32.953Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 5,
+    "implemented": 5,
+    "items": [
+      {
+        "id": "REQ-10",
+        "summary": "Refine frontend/src/components/RestaurantCard.tsx styling to incorporate rustic design elements such as warm borders, earthy backgrounds, and typography that aligns with the Western Colorado aesthetic",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/RestaurantCard.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/RestaurantCard.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Update the color palette in frontend/src/index.css to reflect a warm, rustic 'Western Colorado' aesthetic using earthy tones such as desert sand, canyon red, sage brush green, and weathered wood brown while maintaining the OKLCH color format",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Update typography in frontend/tailwind.config.js to use clean, rustic-appropriate font selections that evoke a Western Colorado aesthetic while maintaining excellent readability",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/tailwind.config.js"
+        ],
+        "matchedFiles": [
+          "frontend/tailwind.config.js"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Enhance frontend/src/components/Layout.tsx header and footer styling to reinforce the Western Colorado rustic aesthetic through subtle design touches such as border treatments or background textures",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Layout.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Layout.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Update frontend/src/pages/DirectoryPage.tsx hero section to feature Western Colorado-inspired visual elements and messaging that emphasize the local rustic character",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/DirectoryPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/DirectoryPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "build-template/README.md",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/RestaurantCard.tsx",
+    "frontend/src/index.css",
+    "frontend/src/pages/DirectoryPage.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
