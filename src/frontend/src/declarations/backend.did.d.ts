@@ -10,20 +10,49 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface Coordinates { 'latitude' : number, 'longitude' : number }
 export interface Restaurant {
+  'isGreatForDate' : boolean,
   'contact' : string,
   'name' : string,
   'description' : string,
+  'isPetFriendly' : boolean,
+  'address' : string,
   'cuisine' : string,
+  'isHiddenGem' : boolean,
+  'isNearRiverfrontTrail' : boolean,
   'location' : string,
+  'isPalisadeFruitSeason' : boolean,
+  'coordinates' : Coordinates,
+  'seasonalMonths' : Array<bigint>,
 }
+export interface UserProfile { 'name' : string }
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
 export interface _SERVICE {
-  'addRestaurant' : ActorMethod<
-    [string, string, string, string, string],
-    undefined
-  >,
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addVisitedRestaurant' : ActorMethod<[string], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'getAllRestaurants' : ActorMethod<[], Array<Restaurant>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getDateNightRestaurants' : ActorMethod<[], Array<Restaurant>>,
+  'getNote' : ActorMethod<[string], [] | [string]>,
+  'getPetFriendlyRestaurants' : ActorMethod<[], Array<Restaurant>>,
+  'getRating' : ActorMethod<[string], [] | [bigint]>,
+  'getRestaurantByName' : ActorMethod<[string], [] | [Restaurant]>,
+  'getRestaurantsByLocation' : ActorMethod<[string], Array<Restaurant>>,
+  'getRestaurantsNearTrail' : ActorMethod<[], Array<Restaurant>>,
+  'getSeasonalRestaurants' : ActorMethod<[], Array<Restaurant>>,
+  'getSeasonalRestaurantsByMonth' : ActorMethod<[bigint], Array<Restaurant>>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'isRestaurantVisited' : ActorMethod<[string], boolean>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'saveNote' : ActorMethod<[string, string], undefined>,
+  'saveRating' : ActorMethod<[string, bigint], undefined>,
   'searchByCuisine' : ActorMethod<[string], Array<Restaurant>>,
-  'searchByName' : ActorMethod<[string], [] | [Restaurant]>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

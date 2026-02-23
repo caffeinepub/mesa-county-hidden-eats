@@ -1,112 +1,86 @@
 {
   "kind": "build_request",
-  "title": "Apply Western Colorado rustic aesthetic with earthy tones",
+  "title": "Activate visited button, add restaurant detail page with ratings and notes, and add three restaurants to database",
   "projectName": "Mesa County Hidden Eats",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-6",
-      "text": "Update the color palette in frontend/src/index.css to reflect a warm, rustic 'Western Colorado' aesthetic using earthy tones such as desert sand, canyon red, sage brush green, and weathered wood brown while maintaining the OKLCH color format",
+      "id": "REQ-43",
+      "text": "Update the 'Visited' button in frontend/src/components/RestaurantCard.tsx to turn solid green and display 'Visited' text when clicked, calling the useMarkVisited mutation hook to persist the visited status with the authenticated user's Principal and restaurant identifier",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-5"
         ],
         "quotes": [
-          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+          "Make it so when a user clicks it, the button turns solid green and says 'Visited.'"
         ]
       },
       "acceptanceCriteria": [
-        "Color palette uses earthy Western Colorado-inspired tones (desert sand, canyon red, sage, weathered wood)",
-        "Colors remain in OKLCH format for consistency with existing implementation",
-        "Both light and dark mode variants are provided",
-        "New colors integrate seamlessly with existing components"
+        "Clicking the 'Mark as Visited' button triggers the useMarkVisited mutation",
+        "After successful mutation, the button changes to solid green background",
+        "The button text changes from 'Mark as Visited' to 'Visited'",
+        "The button state persists across page refreshes using the useIsVisited query"
       ]
     },
     {
-      "id": "REQ-7",
-      "text": "Update typography in frontend/tailwind.config.js to use clean, rustic-appropriate font selections that evoke a Western Colorado aesthetic while maintaining excellent readability",
+      "id": "REQ-44",
+      "text": "Verify frontend/src/pages/RestaurantDetailPage.tsx displays full restaurant information, includes a 5-star interactive rating selector that allows users to select 1-5 stars, and provides a text input field labeled 'My Private Notes' where users can type and save personal notes about what they ate",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-5"
         ],
         "quotes": [
-          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+          "open a detail page that has a 5-star rating selector and a 'My Private Notes' text box where they can type what they ate"
         ]
       },
       "acceptanceCriteria": [
-        "Typography choices complement the rustic Western Colorado theme",
-        "Font selections maintain clean, readable presentation",
-        "Font stack includes appropriate fallbacks for web safety"
+        "Restaurant detail page is accessible by clicking a restaurant card",
+        "Page displays complete restaurant information including name, cuisine, description, address, and image",
+        "5-star rating component allows user to select a rating from 1 to 5 stars",
+        "Selected rating is saved to backend using useSaveRating mutation",
+        "Text input field labeled 'My Private Notes' accepts user input",
+        "Notes are saved to backend using useSaveNote mutation",
+        "Previously saved ratings and notes are loaded on page mount using useGetRating and useGetNote queries"
       ]
     },
     {
-      "id": "REQ-8",
-      "text": "Enhance frontend/src/components/Layout.tsx header and footer styling to reinforce the Western Colorado rustic aesthetic through subtle design touches such as border treatments or background textures",
-      "target": "frontend",
+      "id": "REQ-45",
+      "text": "Add three new restaurant entries to the backend/main.mo restaurant data: (1) Taco Party in Grand Junction with cuisine type 'Mexican', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes; (2) Best Slope Coffee in Fruita with cuisine type 'Cafe', a realistic Fruita street address, appropriate coordinates (~39.1586°N 108.7287°W), isHiddenGem set to true, and relevant vibe attributes; (3) Bin 707 Foodbar in Grand Junction with cuisine type 'Fine Dining', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-5"
         ],
         "quotes": [
-          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
+          "Please add Taco Party, Best Slope Coffee, and Bin 707 Foodbar to the database now so the home screen is full"
         ]
       },
       "acceptanceCriteria": [
-        "Header reflects rustic Western Colorado theme through visual styling",
-        "Footer maintains cohesive design language",
-        "Design enhancements are subtle and don't overwhelm content"
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Update frontend/src/pages/DirectoryPage.tsx hero section to feature Western Colorado-inspired visual elements and messaging that emphasize the local rustic character",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-last"
-        ],
-        "quotes": [
-          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Hero section uses earthy color palette from updated theme",
-        "Visual presentation evokes Western Colorado rustic charm",
-        "Messaging emphasizes local character and discovery"
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Refine frontend/src/components/RestaurantCard.tsx styling to incorporate rustic design elements such as warm borders, earthy backgrounds, and typography that aligns with the Western Colorado aesthetic",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-last"
-        ],
-        "quotes": [
-          "Design Style: Use a warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Restaurant cards feature rustic styling with warm, earthy tones",
-        "Card borders and backgrounds complement Western Colorado theme",
-        "Typography remains clean and readable while supporting rustic aesthetic"
+        "Taco Party restaurant entry is added with Mexican cuisine type and Grand Junction location",
+        "Best Slope Coffee restaurant entry is added with Cafe cuisine type and Fruita location",
+        "Bin 707 Foodbar restaurant entry is added with Fine Dining cuisine type and Grand Junction location",
+        "All three restaurants have realistic street addresses matching their city",
+        "All three restaurants have appropriate latitude/longitude coordinates for their location",
+        "All three restaurants have isHiddenGem set to true",
+        "All three restaurants have appropriate vibe attributes (isPetFriendly, isNearRiverfrontTrail, isGreatForDate) set based on their characteristics",
+        "The directory home screen displays all restaurants including the three new entries"
       ]
     }
   ],
   "constraints": [
-    "Maintain existing OKLCH color format in CSS variables",
-    "Do not modify immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
-    "Preserve all existing functionality and component structure",
-    "Keep mobile-responsive design intact"
+    "Maintain single-actor architecture in backend/main.mo",
+    "Do not modify immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
+    "Use existing React Query hooks (useMarkVisited, useIsVisited, useSaveRating, useGetRating, useSaveNote, useGetNote) defined in frontend/src/hooks/useQueries.ts",
+    "Preserve Western Colorado rustic aesthetic and color palette"
   ],
   "nonGoals": [
-    "Adding new restaurant features or functionality",
-    "Modifying backend data structures",
-    "Changing search or filtering logic",
-    "Adding new pages or routes"
+    "Adding any restaurants beyond the three specified (Taco Party, Best Slope Coffee, Bin 707 Foodbar)",
+    "Modifying existing restaurant entries",
+    "Changing the restaurant detail page route structure",
+    "Adding new authentication methods",
+    "Implementing real-time synchronization"
   ],
   "imageRequirements": {
     "required": [],

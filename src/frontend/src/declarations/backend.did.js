@@ -8,43 +8,145 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const Coordinates = IDL.Record({
+  'latitude' : IDL.Float64,
+  'longitude' : IDL.Float64,
+});
 export const Restaurant = IDL.Record({
+  'isGreatForDate' : IDL.Bool,
   'contact' : IDL.Text,
   'name' : IDL.Text,
   'description' : IDL.Text,
+  'isPetFriendly' : IDL.Bool,
+  'address' : IDL.Text,
   'cuisine' : IDL.Text,
+  'isHiddenGem' : IDL.Bool,
+  'isNearRiverfrontTrail' : IDL.Bool,
   'location' : IDL.Text,
+  'isPalisadeFruitSeason' : IDL.Bool,
+  'coordinates' : Coordinates,
+  'seasonalMonths' : IDL.Vec(IDL.Nat),
 });
+export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 
 export const idlService = IDL.Service({
-  'addRestaurant' : IDL.Func(
-      [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
-      [],
-      [],
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addVisitedRestaurant' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'getAllRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getDateNightRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+  'getNote' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Text)], ['query']),
+  'getPetFriendlyRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+  'getRating' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Nat)], ['query']),
+  'getRestaurantByName' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(Restaurant)],
+      ['query'],
     ),
+  'getRestaurantsByLocation' : IDL.Func(
+      [IDL.Text],
+      [IDL.Vec(Restaurant)],
+      ['query'],
+    ),
+  'getRestaurantsNearTrail' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+  'getSeasonalRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+  'getSeasonalRestaurantsByMonth' : IDL.Func(
+      [IDL.Nat],
+      [IDL.Vec(Restaurant)],
+      ['query'],
+    ),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'isRestaurantVisited' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'saveNote' : IDL.Func([IDL.Text, IDL.Text], [], []),
+  'saveRating' : IDL.Func([IDL.Text, IDL.Nat], [], []),
   'searchByCuisine' : IDL.Func([IDL.Text], [IDL.Vec(Restaurant)], ['query']),
-  'searchByName' : IDL.Func([IDL.Text], [IDL.Opt(Restaurant)], ['query']),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const Coordinates = IDL.Record({
+    'latitude' : IDL.Float64,
+    'longitude' : IDL.Float64,
+  });
   const Restaurant = IDL.Record({
+    'isGreatForDate' : IDL.Bool,
     'contact' : IDL.Text,
     'name' : IDL.Text,
     'description' : IDL.Text,
+    'isPetFriendly' : IDL.Bool,
+    'address' : IDL.Text,
     'cuisine' : IDL.Text,
+    'isHiddenGem' : IDL.Bool,
+    'isNearRiverfrontTrail' : IDL.Bool,
     'location' : IDL.Text,
+    'isPalisadeFruitSeason' : IDL.Bool,
+    'coordinates' : Coordinates,
+    'seasonalMonths' : IDL.Vec(IDL.Nat),
   });
+  const UserProfile = IDL.Record({ 'name' : IDL.Text });
   
   return IDL.Service({
-    'addRestaurant' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addVisitedRestaurant' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'getAllRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getDateNightRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+    'getNote' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Text)], ['query']),
+    'getPetFriendlyRestaurants' : IDL.Func(
         [],
-        [],
+        [IDL.Vec(Restaurant)],
+        ['query'],
       ),
+    'getRating' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Nat)], ['query']),
+    'getRestaurantByName' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(Restaurant)],
+        ['query'],
+      ),
+    'getRestaurantsByLocation' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(Restaurant)],
+        ['query'],
+      ),
+    'getRestaurantsNearTrail' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+    'getSeasonalRestaurants' : IDL.Func([], [IDL.Vec(Restaurant)], ['query']),
+    'getSeasonalRestaurantsByMonth' : IDL.Func(
+        [IDL.Nat],
+        [IDL.Vec(Restaurant)],
+        ['query'],
+      ),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'isRestaurantVisited' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'saveNote' : IDL.Func([IDL.Text, IDL.Text], [], []),
+    'saveRating' : IDL.Func([IDL.Text, IDL.Nat], [], []),
     'searchByCuisine' : IDL.Func([IDL.Text], [IDL.Vec(Restaurant)], ['query']),
-    'searchByName' : IDL.Func([IDL.Text], [IDL.Opt(Restaurant)], ['query']),
   });
 };
 

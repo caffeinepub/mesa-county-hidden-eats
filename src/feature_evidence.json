@@ -2,80 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-color-palette-in-frontend-src-index-css-to-reflect-a-warm-rustic-western-colorado-aesthetic-using-earthy-tones-such-as-desert-sand-canyon-red-sage-brush-green-and-weathered-wood-brown-while-maintaining-the-oklch-color-format",
-      "featureTitle": "Update the color palette in frontend/src/index.css to reflect a warm, rustic 'Western Colorado' aesthetic using earthy tones such as desert sand, canyon red, sage brush green, and weathered wood brown while maintaining the OKLCH color format",
-      "files": [
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-typography-in-frontend-tailwind-config-js-to-use-clean-rustic-appropriate-font-selections-that-evoke-a-western-colorado-aesthetic-while-maintaining-excellent-readability",
-      "featureTitle": "Update typography in frontend/tailwind.config.js to use clean, rustic-appropriate font selections that evoke a Western Colorado aesthetic while maintaining excellent readability",
-      "files": [
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-enhance-frontend-src-components-layout-tsx-header-and-footer-styling-to-reinforce-the-western-colorado-rustic-aesthetic-through-subtle-design-touches-such-as-border-treatments-or-background-textures",
-      "featureTitle": "Enhance frontend/src/components/Layout.tsx header and footer styling to reinforce the Western Colorado rustic aesthetic through subtle design touches such as border treatments or background textures",
-      "files": [
-        "frontend/src/components/Layout.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-frontend-src-pages-directorypage-tsx-hero-section-to-feature-western-colorado-inspired-visual-elements-and-messaging-that-emphasize-the-local-rustic-character",
-      "featureTitle": "Update frontend/src/pages/DirectoryPage.tsx hero section to feature Western Colorado-inspired visual elements and messaging that emphasize the local rustic character",
-      "files": [
-        "frontend/src/pages/DirectoryPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-refine-frontend-src-components-restaurantcard-tsx-styling-to-incorporate-rustic-design-elements-such-as-warm-borders-earthy-backgrounds-and-typography-that-aligns-with-the-western-colorado-aesthetic",
-      "featureTitle": "Refine frontend/src/components/RestaurantCard.tsx styling to incorporate rustic design elements such as warm borders, earthy backgrounds, and typography that aligns with the Western Colorado aesthetic",
+      "featureId": "feature-update-the-visited-button-in-frontend-src-components-restaurantcard-tsx-to-turn-solid-green-and-display-visited-text-when-clicked-calling-the-usemarkvisited-mutation-hook-to-persist-the-visited-status-with-the-authenticated-user-s-principal-and-restaurant-identifier",
+      "featureTitle": "Update the 'Visited' button in frontend/src/components/RestaurantCard.tsx to turn solid green and display 'Visited' text when clicked, calling the useMarkVisited mutation hook to persist the visited status with the authenticated user's Principal and restaurant identifier",
       "files": [
         "frontend/src/components/RestaurantCard.tsx"
       ],
@@ -84,10 +12,11 @@
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-10"
+        "REQ-43"
       ],
       "confidence": "high"
     }

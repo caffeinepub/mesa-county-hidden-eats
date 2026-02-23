@@ -1,13 +1,22 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
+  "projectStateVersion": 17,
   "summary": "A mobile-friendly directory app called 'Mesa County Hidden Eats' for discovering local restaurants and eateries",
   "architectural_notes": [
     "Mobile-first responsive design approach",
     "Directory-style application for browsing local eateries",
-    "Warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography"
+    "Warm, rustic 'Western Colorado' aesthetic with earthy tones and clean typography",
+    "Replace dropdown menus with simple buttons to avoid component errors",
+    "Include placeholder restaurant data for Grand Junction and Fruita for valid initial state",
+    "User profile storage needed for visited status, ratings, and private notes per restaurant",
+    "Geo-location services required for 'Near Me' feature using browser GPS API",
+    "Vibe attributes (pet-friendly, riverfront trail, date-friendly) need to be added to restaurant data model",
+    "Business claim feature should capture owner contact information for future monetization",
+    "Seasonal availability field needed in restaurant data model with date range support"
   ],
-  "known_issues": [],
+  "known_issues": [
+    "Crash on draft page due to Select.Item error in dropdown menus"
+  ],
   "isFixRequest": false,
   "existing_features": [
     {
@@ -81,6 +90,166 @@
         "REQ-10"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-verify-component-rendering-order-in-frontend-src-app-tsx-and-frontend-src-pages-directorypage-tsx-to-ensure-queries-using-useactor-only-execute-after-authentication-providers-are-mounted-and-ready",
+      "title": "Verify component rendering order in frontend/src/App.tsx and frontend/src/pages/DirectoryPage.tsx to ensure queries using useActor only execute after authentication providers are mounted and ready",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-error-boundaries-and-loading-states-in-frontend-src-components-restaurantlist-tsx-and-frontend-src-pages-directorypage-tsx-to-gracefully-handle-authentication-and-query-failures",
+      "title": "Add error boundaries and loading states in frontend/src/components/RestaurantList.tsx and frontend/src/pages/DirectoryPage.tsx to gracefully handle authentication and query failures",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rewrite-frontend-src-components-searchbar-tsx-to-remove-the-dropdown-select-component-for-cuisine-filtering-and-replace-it-with-simple-button-elements-for-each-cuisine-type",
+      "title": "Rewrite frontend/src/components/SearchBar.tsx to remove the dropdown Select component for cuisine filtering and replace it with simple button elements for each cuisine type",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-hooks-usequeries-ts-so-usegetallrestaurants-returns-the-actual-restaurant-list-from-the-backend-instead-of-an-empty-array",
+      "title": "Update frontend/src/hooks/useQueries.ts so useGetAllRestaurants returns the actual restaurant list from the backend instead of an empty array",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-frontend-src-pages-directorypage-tsx-removes-any-remaining-dropdown-dependencies-and-renders-correctly-with-the-button-based-search-interface",
+      "title": "Verify frontend/src/pages/DirectoryPage.tsx removes any remaining dropdown dependencies and renders correctly with the button-based search interface",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-components-restaurantcard-tsx-to-display-the-hidden-gem-tag-as-a-visual-badge-when-present-on-a-restaurant",
+      "title": "Update frontend/src/components/RestaurantCard.tsx to display the 'Hidden Gem' tag as a visual badge when present on a restaurant",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-components-restaurantcard-tsx-to-display-the-full-street-address-for-each-restaurant-below-the-location-city-information",
+      "title": "Update frontend/src/components/RestaurantCard.tsx to display the full street address for each restaurant below the location city information",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-visited-button-to-frontend-src-components-restaurantcard-tsx-that-changes-visual-appearance-color-when-the-restaurant-is-marked-as-visited-calls-the-backend-addvisitedrestaurant-method-on-click-using-the-authenticated-user-s-identity-and-queries-the-backend-isrestaurantvisited-method-to-initialize-the-button-state",
+      "title": "Add a 'Visited' button to frontend/src/components/RestaurantCard.tsx that changes visual appearance (color) when the restaurant is marked as visited, calls the backend addVisitedRestaurant method on click using the authenticated user's identity, and queries the backend isRestaurantVisited method to initialize the button state",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-react-query-mutation-hooks-in-frontend-src-hooks-usequeries-ts-for-marking-restaurants-as-visited-usemarkvisited-and-querying-visited-status-useisvisited-that-call-the-corresponding-backend-methods-with-the-authenticated-user-s-principal",
+      "title": "Create React Query mutation hooks in frontend/src/hooks/useQueries.ts for marking restaurants as visited (useMarkVisited) and querying visited status (useIsVisited) that call the corresponding backend methods with the authenticated user's Principal",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-frontend-src-pages-restaurantdetailpage-tsx-route-component-that-displays-full-restaurant-information-a-5-star-interactive-rating-component-allowing-users-to-select-1-5-stars-and-a-text-input-field-for-private-notes-with-save-functionality-that-calls-the-backend-rating-and-note-methods",
+      "title": "Create a new frontend/src/pages/RestaurantDetailPage.tsx route component that displays full restaurant information, a 5-star interactive rating component allowing users to select 1-5 stars, and a text input field for private notes with save functionality that calls the backend rating and note methods",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-components-restaurantcard-tsx-to-link-to-the-new-restaurant-detail-page-route-when-clicked-passing-the-restaurant-name-or-id-as-a-route-parameter",
+      "title": "Update frontend/src/components/RestaurantCard.tsx to link to the new restaurant detail page route when clicked, passing the restaurant name or ID as a route parameter",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-hooks-in-frontend-src-hooks-usequeries-ts-for-saving-and-fetching-user-ratings-usesaverating-usegetrating-and-private-notes-usesavenote-usegetnote-that-call-the-corresponding-backend-methods-with-the-authenticated-user-s-principal-and-restaurant-identifier",
+      "title": "Add React Query hooks in frontend/src/hooks/useQueries.ts for saving and fetching user ratings (useSaveRating, useGetRating) and private notes (useSaveNote, useGetNote) that call the corresponding backend methods with the authenticated user's Principal and restaurant identifier",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-restaurant-detail-page-route-in-frontend-src-app-tsx-using-tanstack-router-with-a-dynamic-route-parameter-for-restaurant-identification",
+      "title": "Register the restaurant detail page route in frontend/src/App.tsx using TanStack Router with a dynamic route parameter for restaurant identification",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-find-gems-near-me-button-to-frontend-src-pages-directorypage-tsx-that-requests-the-user-s-geolocation-and-filters-restaurants-by-proximity-showing-only-restaurants-within-a-configurable-radius-default-10-miles",
+      "title": "Add a 'Find Gems Near Me' button to frontend/src/pages/DirectoryPage.tsx that requests the user's geolocation and filters restaurants by proximity, showing only restaurants within a configurable radius (default 10 miles)",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-vibe-filter-buttons-to-frontend-src-components-searchbar-tsx-for-pet-friendly-patio-near-the-riverfront-trail-and-great-for-a-date-that-can-be-toggled-independently-alongside-existing-cuisine-filters",
+      "title": "Add vibe filter buttons to frontend/src/components/SearchBar.tsx for 'Pet-Friendly Patio', 'Near the Riverfront Trail', and 'Great for a Date' that can be toggled independently alongside existing cuisine filters",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-hooks-userestaurantsearch-ts-to-include-vibe-filter-logic-that-filters-restaurants-based-on-ispetfriendly-isnearriverfronttrail-and-isgreatfordate-attributes-when-vibe-filters-are-active",
+      "title": "Update frontend/src/hooks/useRestaurantSearch.ts to include vibe filter logic that filters restaurants based on isPetFriendly, isNearRiverfrontTrail, and isGreatForDate attributes when vibe filters are active",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-claim-my-business-link-at-the-bottom-of-frontend-src-components-restaurantcard-tsx-and-frontend-src-pages-restaurantdetailpage-tsx-that-opens-a-contact-form-or-email-link-allowing-restaurant-owners-to-express-interest-in-featured-placement",
+      "title": "Add a 'Claim My Business' link at the bottom of frontend/src/components/RestaurantCard.tsx and frontend/src/pages/RestaurantDetailPage.tsx that opens a contact form or email link allowing restaurant owners to express interest in featured placement",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-palisade-fruit-season-toggle-button-to-frontend-src-pages-directorypage-tsx-that-when-enabled-highlights-and-prioritizes-seasonal-establishments-orchards-and-stands-open-june-october-and-dims-or-filters-out-non-seasonal-venues",
+      "title": "Add a 'Palisade Fruit Season' toggle button to frontend/src/pages/DirectoryPage.tsx that, when enabled, highlights and prioritizes seasonal establishments (orchards and stands open June–October) and dims or filters out non-seasonal venues",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-seasonal-badges-to-frontend-src-components-restaurantcard-tsx-that-display-open-june-october-or-custom-month-ranges-for-restaurants-marked-as-seasonal-with-prominent-visual-styling-during-the-active-season-months",
+      "title": "Add seasonal badges to frontend/src/components/RestaurantCard.tsx that display 'Open June-October' or custom month ranges for restaurants marked as seasonal, with prominent visual styling during the active season months",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-visited-button-in-frontend-src-components-restaurantcard-tsx-to-turn-solid-green-and-display-visited-text-when-clicked-calling-the-usemarkvisited-mutation-hook-to-persist-the-visited-status-with-the-authenticated-user-s-principal-and-restaurant-identifier",
+      "title": "Update the 'Visited' button in frontend/src/components/RestaurantCard.tsx to turn solid green and display 'Visited' text when clicked, calling the useMarkVisited mutation hook to persist the visited status with the authenticated user's Principal and restaurant identifier",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -107,6 +276,162 @@
       "summary": "Implement backend data model and storage for restaurant entries including fields for name, cuisine type, description, location, and contact information",
       "reqIds": [
         "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Verify and fix Internet Identity authentication flow in frontend/src/hooks/useInternetIdentity.ts to ensure proper initialization, delegation validation, and state synchronization without race conditions",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Ensure React Query client in frontend/src/main.tsx is properly configured with appropriate staleTime and cacheTime settings to prevent conflicts during component hydration",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Fix actor initialization timing in frontend/src/hooks/useActor.ts to ensure the backend actor is created only after Internet Identity authentication completes successfully",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Rewrite app code from scratch removing all dropdown menus and replacing with simple buttons to prevent Select.Item errors",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add placeholder restaurant data for Grand Junction and Fruita to ensure valid app state on load",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add placeholder restaurant data in backend/main.mo with at least 5-8 sample restaurants from Grand Junction and Fruita including names, cuisine types, descriptions, locations, and contact information",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Replace the existing restaurant data in backend/main.mo with exactly 5 Mesa County restaurants: Pêche (Palisade) with fine dining and locally sourced description, Hot Tomato Pizza (Fruita) with legendary pizza and bike-friendly description, Taco Party (Grand Junction) with creative local tacos description, Best Slope Coffee (Fruita) with artisan coffee and community hub description, and Bin 707 Foodbar (Grand Junction) with high-end seasonal Colorado cuisine description",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add a complete street address field to each of the 5 restaurants in backend/main.mo using realistic Mesa County addresses appropriate for each city (Palisade, Fruita, Grand Junction)",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add a 'Hidden Gem' tag field to the Restaurant type in backend/main.mo and set it to true for all 5 restaurants",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Replace the existing restaurant data in backend/main.mo with exactly 5 Mesa County restaurants with complete details: (1) Pêche in Palisade with cuisine type 'Fine Dining', description 'Fine dining, locally sourced', a realistic Palisade street address, and isHiddenGem set to true; (2) Hot Tomato Pizza in Fruita with cuisine type 'Pizza', description 'Legendary pizza, bike-friendly', a realistic Fruita street address, and isHiddenGem set to true; (3) Taco Party in Grand Junction with cuisine type 'Mexican', description 'Creative local tacos', a realistic Grand Junction street address, and isHiddenGem set to true; (4) Best Slope Coffee in Fruita with cuisine type 'Cafe', description 'Artisan coffee and community hub', a realistic Fruita street address, and isHiddenGem set to true; (5) Bin 707 Foodbar in Grand Junction with cuisine type 'Fine Dining', description 'High-end seasonal Colorado cuisine', a realistic Grand Junction street address, and isHiddenGem set to true",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add a Principal-indexed Map type to backend/main.mo to store user-specific data including visited restaurant status, with methods to mark a restaurant as visited for a user (addVisitedRestaurant) and to check if a restaurant is visited by a user (isRestaurantVisited)",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Add Principal-indexed Map types to backend/main.mo to store user ratings (1-5 stars) and private notes for each restaurant, with methods to save a rating (saveRating), get a rating (getRating), save a note (saveNote), and get a note (getNote) for the authenticated user and specified restaurant",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Add 'Near Me' geo-fencing feature with a button to find restaurants near the user's current location using GPS coordinates",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add 'Vibe' filters including Pet-Friendly Patio, Near the Riverfront Trail, and Great for a Date as filterable attributes for restaurants",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Add 'Claim My Business' link at the bottom of restaurant listings for restaurant owners to express interest in featured placement",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Add 'Palisade Fruit Season' seasonal toggle mode to highlight orchards and stands that are only open June–October",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Add a latitude and longitude field to the Restaurant type in backend/main.mo for all existing restaurants using realistic Mesa County coordinates (Palisade ~39.1097°N 108.3526°W, Fruita ~39.1586°N 108.7287°W, Grand Junction ~39.0639°N 108.5506°W)",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Add vibe attribute fields to the Restaurant type in backend/main.mo including isPetFriendly (Bool), isNearRiverfrontTrail (Bool), and isGreatForDate (Bool), and populate these fields for all existing restaurants based on their characteristics",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Add a seasonal attribute field to the Restaurant type in backend/main.mo called isPalisadeFruitSeason (Bool) to indicate if the establishment is an orchard or stand that is only open June–October, and add a seasonalMonths field (array of month numbers 1-12) to specify exact months of operation",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Verify frontend/src/pages/RestaurantDetailPage.tsx displays full restaurant information, includes a 5-star interactive rating selector that allows users to select 1-5 stars, and provides a text input field labeled 'My Private Notes' where users can type and save personal notes about what they ate",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Add three new restaurant entries to the backend/main.mo restaurant data: (1) Taco Party in Grand Junction with cuisine type 'Mexican', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes; (2) Best Slope Coffee in Fruita with cuisine type 'Cafe', a realistic Fruita street address, appropriate coordinates (~39.1586°N 108.7287°W), isHiddenGem set to true, and relevant vibe attributes; (3) Bin 707 Foodbar in Grand Junction with cuisine type 'Fine Dining', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes",
+      "reqIds": [
+        "REQ-45"
       ],
       "status": "pending"
     }

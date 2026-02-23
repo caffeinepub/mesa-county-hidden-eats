@@ -1,9 +1,7 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider, createRoute, createRootRoute } from '@tanstack/react-router';
 import DirectoryPage from './pages/DirectoryPage';
+import RestaurantDetailPage from './pages/RestaurantDetailPage';
 import Layout from './components/Layout';
-
-const queryClient = new QueryClient();
 
 // Create root route with Layout
 const rootRoute = createRootRoute({
@@ -17,8 +15,15 @@ const indexRoute = createRoute({
   component: DirectoryPage,
 });
 
+// Create restaurant detail route
+const restaurantDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/restaurant/$name',
+  component: RestaurantDetailPage,
+});
+
 // Create router
-const routeTree = rootRoute.addChildren([indexRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, restaurantDetailRoute]);
 const router = createRouter({ routeTree });
 
 function App() {

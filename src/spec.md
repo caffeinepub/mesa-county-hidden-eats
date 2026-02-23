@@ -1,13 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Apply a warm, rustic Western Colorado aesthetic with earthy tones and clean typography throughout the application.
+**Goal:** Activate the "Visited" button functionality, create a restaurant detail page with ratings and private notes, and populate the database with three new Mesa County restaurants.
 
 **Planned changes:**
-- Update color palette to use earthy Western Colorado tones (desert sand, canyon red, sage green, weathered wood brown) in OKLCH format
-- Update typography to use clean, rustic-appropriate fonts that evoke Western Colorado aesthetic
-- Enhance header and footer styling with subtle rustic design touches
-- Update hero section with Western Colorado-inspired visual elements and messaging
-- Refine restaurant card styling with warm borders, earthy backgrounds, and rustic typography
+- Update the "Visited" button to turn solid green and display "Visited" text when clicked, persisting the state via backend
+- Implement or verify the restaurant detail page displays full restaurant info with an interactive 5-star rating selector and a "My Private Notes" text field
+- Add three new restaurants to the database: Taco Party (Mexican, Grand Junction), Best Slope Coffee (Cafe, Fruita), and Bin 707 Foodbar (Fine Dining, Grand Junction)
 
-**User-visible outcome:** The application will display a cohesive Western Colorado rustic aesthetic with warm earthy tones, clean typography, and subtle design touches that emphasize local character throughout the interface.
+**User-visible outcome:** Users can mark restaurants as visited with a persistent green button, open restaurant detail pages to rate their experience with stars and save private notes about what they ate, and browse a fuller directory that includes three new local hidden gems.

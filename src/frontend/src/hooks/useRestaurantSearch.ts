@@ -1,48 +1,74 @@
 import { useMemo } from 'react';
-import { useSearchRestaurantByName, useSearchRestaurantsByCuisine } from './useQueries';
+import { useGetAllRestaurants, useSearchRestaurantsByCuisine } from './useQueries';
 import type { Restaurant } from '../backend';
 
-export function useRestaurantSearch(searchQuery: string, cuisineFilter: string) {
-  const trimmedQuery = searchQuery.trim();
+export interface VibeFilters {
+  isPetFriendly: boolean;
+  isNearRiverfrontTrail: boolean;
+  isGreatForDate: boolean;
+}
+
+export function useRestaurantSearch(
+  searchQuery: string,
+  cuisineFilter: string,
+  vibeFilters?: VibeFilters,
+  seasonalMode?: boolean
+) {
+  const trimmedQuery = searchQuery.trim().toLowerCase();
   const trimmedCuisine = cuisineFilter.trim();
 
-  // Search by name if query is provided
-  const { data: nameResult, isLoading: isLoadingName, error: nameError } = useSearchRestaurantByName(trimmedQuery);
+  // Get all restaurants
+  const { data: allRestaurants, isLoading: isLoadingAll, error: allError } = useGetAllRestaurants();
 
   // Search by cuisine if filter is provided
   const { data: cuisineResults, isLoading: isLoadingCuisine, error: cuisineError } = useSearchRestaurantsByCuisine(trimmedCuisine);
 
   const restaurants = useMemo(() => {
-    const results: Restaurant[] = [];
+    let results: Restaurant[] = [];
 
-    // If we have a name search result, add it
-    if (nameResult) {
-      results.push(nameResult);
+    // Start with cuisine filter or all restaurants
+    if (trimmedCuisine && cuisineResults) {
+      results = cuisineResults;
+    } else {
+      results = allRestaurants || [];
     }
 
-    // If we have cuisine results, add them
-    if (cuisineResults && cuisineResults.length > 0) {
-      // Avoid duplicates if name search also returned a result
-      cuisineResults.forEach((restaurant) => {
-        if (!results.some((r) => r.name === restaurant.name)) {
-          results.push(restaurant);
-        }
-      });
-    }
-
-    // If both filters are applied, filter cuisine results by name
-    if (trimmedQuery && trimmedCuisine && cuisineResults) {
-      return cuisineResults.filter((r) =>
-        r.name.toLowerCase().includes(trimmedQuery.toLowerCase())
+    // Apply name search filter
+    if (trimmedQuery) {
+      results = results.filter((r) =>
+        r.name.toLowerCase().includes(trimmedQuery)
       );
     }
 
+    // Apply vibe filters
+    if (vibeFilters) {
+      if (vibeFilters.isPetFriendly) {
+        results = results.filter((r) => r.isPetFriendly);
+      }
+      if (vibeFilters.isNearRiverfrontTrail) {
+        results = results.filter((r) => r.isNearRiverfrontTrail);
+      }
+      if (vibeFilters.isGreatForDate) {
+        results = results.filter((r) => r.isGreatForDate);
+      }
+    }
+
+    // Apply seasonal mode
+    if (seasonalMode) {
+      // Prioritize seasonal restaurants by sorting them to the top
+      results = [...results].sort((a, b) => {
+        if (a.isPalisadeFruitSeason && !b.isPalisadeFruitSeason) return -1;
+        if (!a.isPalisadeFruitSeason && b.isPalisadeFruitSeason) return 1;
+        return 0;
+      });
+    }
+
     return results;
-  }, [nameResult, cuisineResults, trimmedQuery, trimmedCuisine]);
+  }, [allRestaurants, cuisineResults, trimmedQuery, trimmedCuisine, vibeFilters, seasonalMode]);
 
   return {
     restaurants,
-    isLoading: isLoadingName || isLoadingCuisine,
-    error: nameError || cuisineError,
+    isLoading: isLoadingAll || isLoadingCuisine,
+    error: allError || cuisineError,
   };
 }
