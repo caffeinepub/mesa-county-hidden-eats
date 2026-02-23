@@ -1,11 +1,15 @@
 import { useMemo } from 'react';
-import { useGetAllRestaurants, useSearchRestaurantsByCuisine } from './useQueries';
+import { useGetAllRestaurants } from './useQueries';
 import type { Restaurant } from '../backend';
+import { Cuisine } from '../backend';
 
 export interface VibeFilters {
   isPetFriendly: boolean;
   isNearRiverfrontTrail: boolean;
   isGreatForDate: boolean;
+  isLiveMusic: boolean;
+  isDogFriendly: boolean;
+  isGreatForGroups: boolean;
 }
 
 export function useRestaurantSearch(
@@ -20,17 +24,12 @@ export function useRestaurantSearch(
   // Get all restaurants
   const { data: allRestaurants, isLoading: isLoadingAll, error: allError } = useGetAllRestaurants();
 
-  // Search by cuisine if filter is provided
-  const { data: cuisineResults, isLoading: isLoadingCuisine, error: cuisineError } = useSearchRestaurantsByCuisine(trimmedCuisine);
-
   const restaurants = useMemo(() => {
-    let results: Restaurant[] = [];
+    let results: Restaurant[] = allRestaurants || [];
 
-    // Start with cuisine filter or all restaurants
-    if (trimmedCuisine && cuisineResults) {
-      results = cuisineResults;
-    } else {
-      results = allRestaurants || [];
+    // Apply cuisine filter
+    if (trimmedCuisine) {
+      results = results.filter((r) => r.cuisine === trimmedCuisine);
     }
 
     // Apply name search filter
@@ -51,6 +50,16 @@ export function useRestaurantSearch(
       if (vibeFilters.isGreatForDate) {
         results = results.filter((r) => r.isGreatForDate);
       }
+      if (vibeFilters.isLiveMusic) {
+        results = results.filter((r) => r.vibeAttributes.liveMusic);
+      }
+      if (vibeFilters.isDogFriendly) {
+        results = results.filter((r) => r.vibeAttributes.dogFriendly);
+      }
+      if (vibeFilters.isGreatForGroups) {
+        // Using vibeAttributes.familyFriendly as a proxy for great for groups
+        results = results.filter((r) => r.vibeAttributes.familyFriendly);
+      }
     }
 
     // Apply seasonal mode
@@ -64,11 +73,11 @@ export function useRestaurantSearch(
     }
 
     return results;
-  }, [allRestaurants, cuisineResults, trimmedQuery, trimmedCuisine, vibeFilters, seasonalMode]);
+  }, [allRestaurants, trimmedQuery, trimmedCuisine, vibeFilters, seasonalMode]);
 
   return {
     restaurants,
-    isLoading: isLoadingAll || isLoadingCuisine,
-    error: allError || cuisineError,
+    isLoading: isLoadingAll,
+    error: allError,
   };
 }

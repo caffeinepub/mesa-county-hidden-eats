@@ -11,18 +11,40 @@ import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
 export interface Coordinates { 'latitude' : number, 'longitude' : number }
+export type Cuisine = { 'bar' : null } |
+  { 'pub' : null } |
+  { 'fineDining' : null } |
+  { 'seafood' : null } |
+  { 'steakhouse' : null } |
+  { 'cafe' : null } |
+  { 'deli' : null } |
+  { 'winery' : null } |
+  { 'sandwiches' : null } |
+  { 'mexican' : null } |
+  { 'hybrid' : null } |
+  { 'italian' : null } |
+  { 'hotelRestaurant' : null } |
+  { 'market' : null } |
+  { 'pizza' : null } |
+  { 'burger' : null } |
+  { 'barbecue' : null } |
+  { 'asianFusion' : null } |
+  { 'coffeeShop' : null } |
+  { 'brewery' : null };
 export interface Restaurant {
   'isGreatForDate' : boolean,
   'contact' : string,
   'name' : string,
   'description' : string,
   'isPetFriendly' : boolean,
+  'imageURL' : string,
   'address' : string,
-  'cuisine' : string,
+  'cuisine' : Cuisine,
   'isHiddenGem' : boolean,
   'isNearRiverfrontTrail' : boolean,
   'location' : string,
   'isPalisadeFruitSeason' : boolean,
+  'vibeAttributes' : VibeAttributes,
   'coordinates' : Coordinates,
   'seasonalMonths' : Array<bigint>,
 }
@@ -30,29 +52,35 @@ export interface UserProfile { 'name' : string }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
+export interface VibeAttributes {
+  'dogFriendly' : boolean,
+  'familyFriendly' : boolean,
+  'dateNightFriendly' : boolean,
+  'artCraftsFocused' : boolean,
+  'perfectLighting' : boolean,
+  'brightOpenSpaces' : boolean,
+  'liveMusic' : boolean,
+  'themedDrinks' : boolean,
+  'fruitInfusedRecipes' : boolean,
+  'mountainViews' : boolean,
+  'workFriendly' : boolean,
+  'fruitCiderOptions' : boolean,
+}
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
-  'addVisitedRestaurant' : ActorMethod<[string], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'getAllRestaurants' : ActorMethod<[], Array<Restaurant>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getDateNightRestaurants' : ActorMethod<[], Array<Restaurant>>,
-  'getNote' : ActorMethod<[string], [] | [string]>,
   'getPetFriendlyRestaurants' : ActorMethod<[], Array<Restaurant>>,
-  'getRating' : ActorMethod<[string], [] | [bigint]>,
   'getRestaurantByName' : ActorMethod<[string], [] | [Restaurant]>,
   'getRestaurantsByLocation' : ActorMethod<[string], Array<Restaurant>>,
   'getRestaurantsNearTrail' : ActorMethod<[], Array<Restaurant>>,
-  'getSeasonalRestaurants' : ActorMethod<[], Array<Restaurant>>,
-  'getSeasonalRestaurantsByMonth' : ActorMethod<[bigint], Array<Restaurant>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
-  'isRestaurantVisited' : ActorMethod<[string], boolean>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
-  'saveNote' : ActorMethod<[string, string], undefined>,
-  'saveRating' : ActorMethod<[string, bigint], undefined>,
-  'searchByCuisine' : ActorMethod<[string], Array<Restaurant>>,
+  'searchByCuisine' : ActorMethod<[Cuisine], Array<Restaurant>>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

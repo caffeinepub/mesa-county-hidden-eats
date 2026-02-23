@@ -54,7 +54,7 @@ export default function RestaurantCard({ restaurant, distance, highlightSeasonal
         {/* Restaurant Image */}
         <div className="relative h-48 w-full overflow-hidden bg-muted/50">
           <img
-            src="/assets/generated/restaurant-placeholder.dim_400x300.png"
+            src={restaurant.imageURL}
             alt={restaurant.name}
             className="h-full w-full object-cover"
           />

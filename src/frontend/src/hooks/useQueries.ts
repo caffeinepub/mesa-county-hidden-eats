@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
 import type { Restaurant, UserProfile } from '../backend';
+import { Cuisine } from '../backend';
 
 export function useGetAllRestaurants() {
   const { actor, isFetching } = useActor();
@@ -30,7 +31,7 @@ export function useSearchRestaurantByName(name: string) {
   });
 }
 
-export function useSearchRestaurantsByCuisine(cuisine: string) {
+export function useSearchRestaurantsByCuisine(cuisine: Cuisine) {
   const { actor, isFetching } = useActor();
 
   return useQuery<Restaurant[]>({
@@ -80,127 +81,109 @@ export function useSaveCallerUserProfile() {
   });
 }
 
-// Visited Restaurant Hooks
+// Client-side visited tracking (localStorage)
 export function useIsVisited(restaurantName: string) {
-  const { actor, isFetching } = useActor();
-
   return useQuery<boolean>({
     queryKey: ['visited', restaurantName],
-    queryFn: async () => {
-      if (!actor) return false;
+    queryFn: () => {
       try {
-        return await actor.isRestaurantVisited(restaurantName);
+        const visited = localStorage.getItem(`visited_${restaurantName}`);
+        return visited === 'true';
       } catch (error) {
         console.error('Error checking visited status:', error);
         return false;
       }
     },
-    enabled: !!actor && !isFetching && !!restaurantName,
     staleTime: 1 * 60 * 1000, // 1 minute
   });
 }
 
 export function useMarkVisited() {
-  const { actor } = useActor();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (restaurantName: string) => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.addVisitedRestaurant(restaurantName);
+      localStorage.setItem(`visited_${restaurantName}`, 'true');
+      return restaurantName;
     },
-    onSuccess: (_, restaurantName) => {
+    onSuccess: (restaurantName) => {
       queryClient.invalidateQueries({ queryKey: ['visited', restaurantName] });
     },
     onError: (error: any) => {
       console.error('Error marking restaurant as visited:', error);
-      if (error.message?.includes('Unauthorized')) {
-        throw new Error('Please log in to mark restaurants as visited');
-      }
       throw error;
     },
   });
 }
 
-// Rating Hooks
+// Client-side rating tracking (localStorage)
 export function useGetRating(restaurantName: string) {
-  const { actor, isFetching } = useActor();
-
   return useQuery<bigint | null>({
     queryKey: ['rating', restaurantName],
-    queryFn: async () => {
-      if (!actor) return null;
+    queryFn: () => {
       try {
-        return await actor.getRating(restaurantName);
+        const rating = localStorage.getItem(`rating_${restaurantName}`);
+        return rating ? BigInt(rating) : null;
       } catch (error) {
         console.error('Error fetching rating:', error);
         return null;
       }
     },
-    enabled: !!actor && !isFetching && !!restaurantName,
     staleTime: 1 * 60 * 1000, // 1 minute
   });
 }
 
 export function useSaveRating() {
-  const { actor } = useActor();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ restaurantName, rating }: { restaurantName: string; rating: bigint }) => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.saveRating(restaurantName, rating);
+      localStorage.setItem(`rating_${restaurantName}`, rating.toString());
+      return { restaurantName, rating };
     },
     onSuccess: (_, { restaurantName }) => {
       queryClient.invalidateQueries({ queryKey: ['rating', restaurantName] });
     },
     onError: (error: any) => {
       console.error('Error saving rating:', error);
-      if (error.message?.includes('Unauthorized')) {
-        throw new Error('Please log in to rate restaurants');
-      }
       throw error;
     },
   });
 }
 
-// Note Hooks
+// Client-side note tracking (localStorage)
 export function useGetNote(restaurantName: string) {
-  const { actor, isFetching } = useActor();
-
   return useQuery<string | null>({
     queryKey: ['note', restaurantName],
-    queryFn: async () => {
-      if (!actor) return null;
+    queryFn: () => {
       try {
-        return await actor.getNote(restaurantName);
+        return localStorage.getItem(`note_${restaurantName}`);
       } catch (error) {
         console.error('Error fetching note:', error);
         return null;
       }
     },
-    enabled: !!actor && !isFetching && !!restaurantName,
     staleTime: 1 * 60 * 1000, // 1 minute
   });
 }
 
 export function useSaveNote() {
-  const { actor } = useActor();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ restaurantName, note }: { restaurantName: string; note: string }) => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.saveNote(restaurantName, note);
+      if (note.trim()) {
+        localStorage.setItem(`note_${restaurantName}`, note);
+      } else {
+        localStorage.removeItem(`note_${restaurantName}`);
+      }
+      return { restaurantName, note };
     },
     onSuccess: (_, { restaurantName }) => {
       queryClient.invalidateQueries({ queryKey: ['note', restaurantName] });
     },
     onError: (error: any) => {
       console.error('Error saving note:', error);
-      if (error.message?.includes('Unauthorized')) {
-        throw new Error('Please log in to save notes');
-      }
       throw error;
     },
   });

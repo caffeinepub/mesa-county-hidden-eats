@@ -1,42 +1,51 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Activate visited button, add restaurant detail page with ratings and notes, and add three restaurants to database",
+  "title": "Add Hybrid category and new art studio business",
   "requirements": [
     {
-      "id": "REQ-43",
-      "summary": "Update the 'Visited' button in RestaurantCard to turn solid green and display 'Visited' text when clicked, persisting the visited status",
+      "id": "REQ-65",
+      "summary": "Add 'Hybrid' cuisine filter button to SearchBar component",
       "acceptanceCriteria": [
-        "Clicking the 'Mark as Visited' button triggers the useMarkVisited mutation",
-        "After successful mutation, the button changes to solid green background",
-        "The button text changes from 'Mark as Visited' to 'Visited'",
-        "The button state persists across page refreshes using the useIsVisited query"
+        "A 'Hybrid' cuisine filter button appears in the SearchBar component",
+        "The button can be toggled on/off independently like other cuisine filters",
+        "The button styling matches existing cuisine filter buttons"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SearchBar.tsx",
+          "operation": "modify",
+          "description": "Add 'Hybrid' as a cuisine filter button alongside existing cuisine options (bar, pub, cafe, winery, etc.), maintaining the same visual style and toggle behavior as other cuisine filter buttons."
+        }
+      ]
+    },
+    {
+      "id": "REQ-66",
+      "summary": "Update cuisine filtering logic to support Hybrid category",
+      "acceptanceCriteria": [
+        "When the 'Hybrid' cuisine filter is active, only restaurants with cuisine type 'Hybrid' are displayed",
+        "The 'Hybrid' filter works independently and in combination with other active filters"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useRestaurantSearch.ts",
+          "operation": "modify",
+          "description": "Include 'Hybrid' (mapped to Cuisine.hybrid from backend enum) in the cuisine filtering logic so restaurants with cuisine type 'Hybrid' are returned when the Hybrid filter is active. Ensure it works independently and in combination with other filters."
+        }
+      ]
+    },
+    {
+      "id": "REQ-67",
+      "summary": "Display generated hybrid art studio image in RestaurantCard",
+      "acceptanceCriteria": [
+        "The new Hybrid restaurant displays the generated art studio image",
+        "The image renders correctly in the RestaurantCard component using the imageURL field"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/RestaurantCard.tsx",
           "operation": "modify",
-          "description": "Replace the current visited checkbox implementation with a button that uses the useMarkVisited mutation hook from useQueries.ts. When clicked, call the mutation with the restaurant name. Update the button styling to show solid green background (bg-green-600) when visited, and update text from 'Mark as Visited' to 'Visited' based on the useIsVisited query result. Use the mutation's isLoading state to disable the button during the request."
-        }
-      ]
-    },
-    {
-      "id": "REQ-44",
-      "summary": "Verify RestaurantDetailPage displays full restaurant information with interactive 5-star rating selector and private notes text input",
-      "acceptanceCriteria": [
-        "Restaurant detail page is accessible by clicking a restaurant card",
-        "Page displays complete restaurant information including name, cuisine, description, address, and image",
-        "5-star rating component allows user to select a rating from 1 to 5 stars",
-        "Selected rating is saved to backend using useSaveRating mutation",
-        "Text input field labeled 'My Private Notes' accepts user input",
-        "Notes are saved to backend using useSaveNote mutation",
-        "Previously saved ratings and notes are loaded on page mount using useGetRating and useGetNote queries"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/RestaurantDetailPage.tsx",
-          "operation": "modify",
-          "description": "Verify the existing RestaurantDetailPage implementation includes: (1) A 5-star interactive rating selector using the useSaveRating mutation and useGetRating query hooks from useQueries.ts, allowing users to select 1-5 stars with visual feedback showing the current selection; (2) A text input field labeled 'My Private Notes' that uses the useSaveNote mutation and useGetNote query hooks to save and load user notes; (3) Full restaurant information display including name, cuisine, description, address, and image; (4) Proper loading states while fetching restaurant details, ratings, and notes; (5) Authentication checks to ensure only logged-in users can rate and add notes. If any of these elements are missing or incomplete, add or update them accordingly while preserving the Western Colorado rustic aesthetic."
+          "description": "Ensure the RestaurantCard component correctly renders the imageURL from the restaurant data. The new Hybrid restaurant entry will have imageURL set to 'frontend/public/assets/generated/hybrid-art-studio.dim_800x600.png', which should render as a static asset using the existing img src logic in the component."
         }
       ]
     }

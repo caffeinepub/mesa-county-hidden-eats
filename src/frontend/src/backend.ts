@@ -89,18 +89,34 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface VibeAttributes {
+    dogFriendly: boolean;
+    familyFriendly: boolean;
+    dateNightFriendly: boolean;
+    artCraftsFocused: boolean;
+    perfectLighting: boolean;
+    brightOpenSpaces: boolean;
+    liveMusic: boolean;
+    themedDrinks: boolean;
+    fruitInfusedRecipes: boolean;
+    mountainViews: boolean;
+    workFriendly: boolean;
+    fruitCiderOptions: boolean;
+}
 export interface Restaurant {
     isGreatForDate: boolean;
     contact: string;
     name: string;
     description: string;
     isPetFriendly: boolean;
+    imageURL: string;
     address: string;
-    cuisine: string;
+    cuisine: Cuisine;
     isHiddenGem: boolean;
     isNearRiverfrontTrail: boolean;
     location: string;
     isPalisadeFruitSeason: boolean;
+    vibeAttributes: VibeAttributes;
     coordinates: Coordinates;
     seasonalMonths: Array<bigint>;
 }
@@ -111,6 +127,28 @@ export interface Coordinates {
 export interface UserProfile {
     name: string;
 }
+export enum Cuisine {
+    bar = "bar",
+    pub = "pub",
+    fineDining = "fineDining",
+    seafood = "seafood",
+    steakhouse = "steakhouse",
+    cafe = "cafe",
+    deli = "deli",
+    winery = "winery",
+    sandwiches = "sandwiches",
+    mexican = "mexican",
+    hybrid = "hybrid",
+    italian = "italian",
+    hotelRestaurant = "hotelRestaurant",
+    market = "market",
+    pizza = "pizza",
+    burger = "burger",
+    barbecue = "barbecue",
+    asianFusion = "asianFusion",
+    coffeeShop = "coffeeShop",
+    brewery = "brewery"
+}
 export enum UserRole {
     admin = "admin",
     user = "user",
@@ -118,29 +156,21 @@ export enum UserRole {
 }
 export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
-    addVisitedRestaurant(restaurantName: string): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     getAllRestaurants(): Promise<Array<Restaurant>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getDateNightRestaurants(): Promise<Array<Restaurant>>;
-    getNote(restaurantName: string): Promise<string | null>;
     getPetFriendlyRestaurants(): Promise<Array<Restaurant>>;
-    getRating(restaurantName: string): Promise<bigint | null>;
     getRestaurantByName(name: string): Promise<Restaurant | null>;
     getRestaurantsByLocation(location: string): Promise<Array<Restaurant>>;
     getRestaurantsNearTrail(): Promise<Array<Restaurant>>;
-    getSeasonalRestaurants(): Promise<Array<Restaurant>>;
-    getSeasonalRestaurantsByMonth(month: bigint): Promise<Array<Restaurant>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
-    isRestaurantVisited(restaurantName: string): Promise<boolean>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
-    saveNote(restaurantName: string, note: string): Promise<void>;
-    saveRating(restaurantName: string, rating: bigint): Promise<void>;
-    searchByCuisine(cuisine: string): Promise<Array<Restaurant>>;
+    searchByCuisine(cuisine: Cuisine): Promise<Array<Restaurant>>;
 }
-import type { Restaurant as _Restaurant, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
+import type { Coordinates as _Coordinates, Cuisine as _Cuisine, Restaurant as _Restaurant, UserProfile as _UserProfile, UserRole as _UserRole, VibeAttributes as _VibeAttributes } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
@@ -154,20 +184,6 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor._initializeAccessControlWithSecret(arg0);
-            return result;
-        }
-    }
-    async addVisitedRestaurant(arg0: string): Promise<void> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.addVisitedRestaurant(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.addVisitedRestaurant(arg0);
             return result;
         }
     }
@@ -189,182 +205,126 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getAllRestaurants();
-                return result;
+                return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getAllRestaurants();
-            return result;
+            return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
         }
     }
     async getCallerUserProfile(): Promise<UserProfile | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getCallerUserProfile();
-                return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getCallerUserProfile();
-            return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getCallerUserRole(): Promise<UserRole> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getCallerUserRole();
-                return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getCallerUserRole();
-            return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getDateNightRestaurants(): Promise<Array<Restaurant>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getDateNightRestaurants();
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getDateNightRestaurants();
-            return result;
-        }
-    }
-    async getNote(arg0: string): Promise<string | null> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getNote(arg0);
-                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getNote(arg0);
-            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getPetFriendlyRestaurants(): Promise<Array<Restaurant>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getPetFriendlyRestaurants();
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getPetFriendlyRestaurants();
-            return result;
-        }
-    }
-    async getRating(arg0: string): Promise<bigint | null> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getRating(arg0);
-                return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getRating(arg0);
-            return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getRestaurantByName(arg0: string): Promise<Restaurant | null> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getRestaurantByName(arg0);
                 return from_candid_opt_n8(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getRestaurantByName(arg0);
+            const result = await this.actor.getCallerUserProfile();
             return from_candid_opt_n8(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getCallerUserRole(): Promise<UserRole> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCallerUserRole();
+                return from_candid_UserRole_n9(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCallerUserRole();
+            return from_candid_UserRole_n9(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getDateNightRestaurants(): Promise<Array<Restaurant>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getDateNightRestaurants();
+                return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getDateNightRestaurants();
+            return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getPetFriendlyRestaurants(): Promise<Array<Restaurant>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getPetFriendlyRestaurants();
+                return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getPetFriendlyRestaurants();
+            return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getRestaurantByName(arg0: string): Promise<Restaurant | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getRestaurantByName(arg0);
+                return from_candid_opt_n11(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getRestaurantByName(arg0);
+            return from_candid_opt_n11(this._uploadFile, this._downloadFile, result);
         }
     }
     async getRestaurantsByLocation(arg0: string): Promise<Array<Restaurant>> {
         if (this.processError) {
             try {
                 const result = await this.actor.getRestaurantsByLocation(arg0);
-                return result;
+                return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getRestaurantsByLocation(arg0);
-            return result;
+            return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
         }
     }
     async getRestaurantsNearTrail(): Promise<Array<Restaurant>> {
         if (this.processError) {
             try {
                 const result = await this.actor.getRestaurantsNearTrail();
-                return result;
+                return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getRestaurantsNearTrail();
-            return result;
-        }
-    }
-    async getSeasonalRestaurants(): Promise<Array<Restaurant>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getSeasonalRestaurants();
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getSeasonalRestaurants();
-            return result;
-        }
-    }
-    async getSeasonalRestaurantsByMonth(arg0: bigint): Promise<Array<Restaurant>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getSeasonalRestaurantsByMonth(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getSeasonalRestaurantsByMonth(arg0);
-            return result;
+            return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
         }
     }
     async getUserProfile(arg0: Principal): Promise<UserProfile | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getUserProfile(arg0);
-                return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n8(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getUserProfile(arg0);
-            return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n8(this._uploadFile, this._downloadFile, result);
         }
     }
     async isCallerAdmin(): Promise<boolean> {
@@ -378,20 +338,6 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.isCallerAdmin();
-            return result;
-        }
-    }
-    async isRestaurantVisited(arg0: string): Promise<boolean> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.isRestaurantVisited(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.isRestaurantVisited(arg0);
             return result;
         }
     }
@@ -409,65 +355,88 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async saveNote(arg0: string, arg1: string): Promise<void> {
+    async searchByCuisine(arg0: Cuisine): Promise<Array<Restaurant>> {
         if (this.processError) {
             try {
-                const result = await this.actor.saveNote(arg0, arg1);
-                return result;
+                const result = await this.actor.searchByCuisine(to_candid_Cuisine_n12(this._uploadFile, this._downloadFile, arg0));
+                return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.saveNote(arg0, arg1);
-            return result;
-        }
-    }
-    async saveRating(arg0: string, arg1: bigint): Promise<void> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.saveRating(arg0, arg1);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.saveRating(arg0, arg1);
-            return result;
-        }
-    }
-    async searchByCuisine(arg0: string): Promise<Array<Restaurant>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.searchByCuisine(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.searchByCuisine(arg0);
-            return result;
+            const result = await this.actor.searchByCuisine(to_candid_Cuisine_n12(this._uploadFile, this._downloadFile, arg0));
+            return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
         }
     }
 }
-function from_candid_UserRole_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
-    return from_candid_variant_n5(_uploadFile, _downloadFile, value);
+function from_candid_Cuisine_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Cuisine): Cuisine {
+    return from_candid_variant_n7(_uploadFile, _downloadFile, value);
 }
-function from_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+function from_candid_Restaurant_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Restaurant): Restaurant {
+    return from_candid_record_n5(_uploadFile, _downloadFile, value);
+}
+function from_candid_UserRole_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
+    return from_candid_variant_n10(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Restaurant]): Restaurant | null {
+    return value.length === 0 ? null : from_candid_Restaurant_n4(_uploadFile, _downloadFile, value[0]);
+}
+function from_candid_opt_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
-    return value.length === 0 ? null : value[0];
+function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    isGreatForDate: boolean;
+    contact: string;
+    name: string;
+    description: string;
+    isPetFriendly: boolean;
+    imageURL: string;
+    address: string;
+    cuisine: _Cuisine;
+    isHiddenGem: boolean;
+    isNearRiverfrontTrail: boolean;
+    location: string;
+    isPalisadeFruitSeason: boolean;
+    vibeAttributes: _VibeAttributes;
+    coordinates: _Coordinates;
+    seasonalMonths: Array<bigint>;
+}): {
+    isGreatForDate: boolean;
+    contact: string;
+    name: string;
+    description: string;
+    isPetFriendly: boolean;
+    imageURL: string;
+    address: string;
+    cuisine: Cuisine;
+    isHiddenGem: boolean;
+    isNearRiverfrontTrail: boolean;
+    location: string;
+    isPalisadeFruitSeason: boolean;
+    vibeAttributes: VibeAttributes;
+    coordinates: Coordinates;
+    seasonalMonths: Array<bigint>;
+} {
+    return {
+        isGreatForDate: value.isGreatForDate,
+        contact: value.contact,
+        name: value.name,
+        description: value.description,
+        isPetFriendly: value.isPetFriendly,
+        imageURL: value.imageURL,
+        address: value.address,
+        cuisine: from_candid_Cuisine_n6(_uploadFile, _downloadFile, value.cuisine),
+        isHiddenGem: value.isHiddenGem,
+        isNearRiverfrontTrail: value.isNearRiverfrontTrail,
+        location: value.location,
+        isPalisadeFruitSeason: value.isPalisadeFruitSeason,
+        vibeAttributes: value.vibeAttributes,
+        coordinates: value.coordinates,
+        seasonalMonths: value.seasonalMonths
+    };
 }
-function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
-    return value.length === 0 ? null : value[0];
-}
-function from_candid_opt_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Restaurant]): Restaurant | null {
-    return value.length === 0 ? null : value[0];
-}
-function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_variant_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     admin: null;
 } | {
     user: null;
@@ -476,8 +445,140 @@ function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uin
 }): UserRole {
     return "admin" in value ? UserRole.admin : "user" in value ? UserRole.user : "guest" in value ? UserRole.guest : value;
 }
+function from_candid_variant_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    bar: null;
+} | {
+    pub: null;
+} | {
+    fineDining: null;
+} | {
+    seafood: null;
+} | {
+    steakhouse: null;
+} | {
+    cafe: null;
+} | {
+    deli: null;
+} | {
+    winery: null;
+} | {
+    sandwiches: null;
+} | {
+    mexican: null;
+} | {
+    hybrid: null;
+} | {
+    italian: null;
+} | {
+    hotelRestaurant: null;
+} | {
+    market: null;
+} | {
+    pizza: null;
+} | {
+    burger: null;
+} | {
+    barbecue: null;
+} | {
+    asianFusion: null;
+} | {
+    coffeeShop: null;
+} | {
+    brewery: null;
+}): Cuisine {
+    return "bar" in value ? Cuisine.bar : "pub" in value ? Cuisine.pub : "fineDining" in value ? Cuisine.fineDining : "seafood" in value ? Cuisine.seafood : "steakhouse" in value ? Cuisine.steakhouse : "cafe" in value ? Cuisine.cafe : "deli" in value ? Cuisine.deli : "winery" in value ? Cuisine.winery : "sandwiches" in value ? Cuisine.sandwiches : "mexican" in value ? Cuisine.mexican : "hybrid" in value ? Cuisine.hybrid : "italian" in value ? Cuisine.italian : "hotelRestaurant" in value ? Cuisine.hotelRestaurant : "market" in value ? Cuisine.market : "pizza" in value ? Cuisine.pizza : "burger" in value ? Cuisine.burger : "barbecue" in value ? Cuisine.barbecue : "asianFusion" in value ? Cuisine.asianFusion : "coffeeShop" in value ? Cuisine.coffeeShop : "brewery" in value ? Cuisine.brewery : value;
+}
+function from_candid_vec_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Restaurant>): Array<Restaurant> {
+    return value.map((x)=>from_candid_Restaurant_n4(_uploadFile, _downloadFile, x));
+}
+function to_candid_Cuisine_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Cuisine): _Cuisine {
+    return to_candid_variant_n13(_uploadFile, _downloadFile, value);
+}
 function to_candid_UserRole_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
     return to_candid_variant_n2(_uploadFile, _downloadFile, value);
+}
+function to_candid_variant_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Cuisine): {
+    bar: null;
+} | {
+    pub: null;
+} | {
+    fineDining: null;
+} | {
+    seafood: null;
+} | {
+    steakhouse: null;
+} | {
+    cafe: null;
+} | {
+    deli: null;
+} | {
+    winery: null;
+} | {
+    sandwiches: null;
+} | {
+    mexican: null;
+} | {
+    hybrid: null;
+} | {
+    italian: null;
+} | {
+    hotelRestaurant: null;
+} | {
+    market: null;
+} | {
+    pizza: null;
+} | {
+    burger: null;
+} | {
+    barbecue: null;
+} | {
+    asianFusion: null;
+} | {
+    coffeeShop: null;
+} | {
+    brewery: null;
+} {
+    return value == Cuisine.bar ? {
+        bar: null
+    } : value == Cuisine.pub ? {
+        pub: null
+    } : value == Cuisine.fineDining ? {
+        fineDining: null
+    } : value == Cuisine.seafood ? {
+        seafood: null
+    } : value == Cuisine.steakhouse ? {
+        steakhouse: null
+    } : value == Cuisine.cafe ? {
+        cafe: null
+    } : value == Cuisine.deli ? {
+        deli: null
+    } : value == Cuisine.winery ? {
+        winery: null
+    } : value == Cuisine.sandwiches ? {
+        sandwiches: null
+    } : value == Cuisine.mexican ? {
+        mexican: null
+    } : value == Cuisine.hybrid ? {
+        hybrid: null
+    } : value == Cuisine.italian ? {
+        italian: null
+    } : value == Cuisine.hotelRestaurant ? {
+        hotelRestaurant: null
+    } : value == Cuisine.market ? {
+        market: null
+    } : value == Cuisine.pizza ? {
+        pizza: null
+    } : value == Cuisine.burger ? {
+        burger: null
+    } : value == Cuisine.barbecue ? {
+        barbecue: null
+    } : value == Cuisine.asianFusion ? {
+        asianFusion: null
+    } : value == Cuisine.coffeeShop ? {
+        coffeeShop: null
+    } : value == Cuisine.brewery ? {
+        brewery: null
+    } : value;
 }
 function to_candid_variant_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
     admin: null;

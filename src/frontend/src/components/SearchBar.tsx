@@ -6,6 +6,9 @@ export interface VibeFilters {
   isPetFriendly: boolean;
   isNearRiverfrontTrail: boolean;
   isGreatForDate: boolean;
+  isLiveMusic: boolean;
+  isDogFriendly: boolean;
+  isGreatForGroups: boolean;
 }
 
 interface SearchBarProps {
@@ -19,13 +22,14 @@ interface SearchBarProps {
 
 const cuisineTypes = [
   { label: 'All', value: '' },
-  { label: 'American', value: 'American' },
-  { label: 'Mexican', value: 'Mexican' },
-  { label: 'Japanese', value: 'Japanese' },
-  { label: 'Pizza', value: 'Pizza' },
-  { label: 'Breakfast', value: 'Breakfast' },
-  { label: 'Cafe', value: 'Cafe' },
-  { label: 'Fine Dining', value: 'Fine Dining' },
+  { label: 'Pizza', value: 'pizza' },
+  { label: 'Mexican', value: 'mexican' },
+  { label: 'Cafe', value: 'cafe' },
+  { label: 'Fine Dining', value: 'fineDining' },
+  { label: 'Bar', value: 'bar' },
+  { label: 'Pub', value: 'pub' },
+  { label: 'Winery', value: 'winery' },
+  { label: 'Hybrid', value: 'hybrid' },
 ];
 
 export default function SearchBar({
@@ -102,6 +106,30 @@ export default function SearchBar({
             className="transition-all"
           >
             💕 Great for a Date
+          </Button>
+          <Button
+            variant={vibeFilters.isLiveMusic ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => toggleVibeFilter('isLiveMusic')}
+            className="transition-all"
+          >
+            🎵 Live Music
+          </Button>
+          <Button
+            variant={vibeFilters.isDogFriendly ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => toggleVibeFilter('isDogFriendly')}
+            className="transition-all"
+          >
+            🐕 Dog-Friendly Patio
+          </Button>
+          <Button
+            variant={vibeFilters.isGreatForGroups ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => toggleVibeFilter('isGreatForGroups')}
+            className="transition-all"
+          >
+            👥 Great for Groups
           </Button>
         </div>
       </div>

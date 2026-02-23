@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-visited-button-in-frontend-src-components-restaurantcard-tsx-to-turn-solid-green-and-display-visited-text-when-clicked-calling-the-usemarkvisited-mutation-hook-to-persist-the-visited-status-with-the-authenticated-user-s-principal-and-restaurant-identifier",
-      "featureTitle": "Update the 'Visited' button in frontend/src/components/RestaurantCard.tsx to turn solid green and display 'Visited' text when clicked, calling the useMarkVisited mutation hook to persist the visited status with the authenticated user's Principal and restaurant identifier",
+      "featureId": "feature-update-frontend-src-components-searchbar-tsx-to-include-hybrid-as-a-cuisine-filter-button-alongside-existing-cuisine-options-maintaining-the-same-visual-style-and-toggle-behavior",
+      "featureTitle": "Update frontend/src/components/SearchBar.tsx to include 'Hybrid' as a cuisine filter button alongside existing cuisine options, maintaining the same visual style and toggle behavior",
       "files": [
-        "frontend/src/components/RestaurantCard.tsx"
+        "frontend/src/components/SearchBar.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,7 +16,26 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-43"
+        "REQ-65"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-frontend-src-hooks-userestaurantsearch-ts-to-include-hybrid-in-the-cuisine-filtering-logic-so-restaurants-with-cuisine-type-hybrid-are-returned-when-the-hybrid-filter-is-active",
+      "featureTitle": "Update frontend/src/hooks/useRestaurantSearch.ts to include 'Hybrid' in the cuisine filtering logic so restaurants with cuisine type 'Hybrid' are returned when the Hybrid filter is active",
+      "files": [
+        "frontend/src/hooks/useRestaurantSearch.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-66"
       ],
       "confidence": "high"
     }

@@ -5,10 +5,11 @@ import { useRestaurantSearch } from '../hooks/useRestaurantSearch';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { MapPin, Loader2, Sparkles } from 'lucide-react';
+import { MapPin, Loader2, Sparkles, Shuffle, Compass } from 'lucide-react';
 import { getUserLocation, filterByProximity } from '../utils/geolocation';
 import type { Restaurant } from '../backend';
 import { toast } from 'sonner';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function DirectoryPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,12 +18,17 @@ export default function DirectoryPage() {
     isPetFriendly: false,
     isNearRiverfrontTrail: false,
     isGreatForDate: false,
+    isLiveMusic: false,
+    isDogFriendly: false,
+    isGreatForGroups: false,
   });
   const [seasonalMode, setSeasonalMode] = useState(false);
   const [nearbyRestaurants, setNearbyRestaurants] = useState<Array<Restaurant & { distance: number }> | null>(null);
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+  const [isSurpriseMeLoading, setIsSurpriseMeLoading] = useState(false);
   
   const { isInitializing, loginError, login } = useInternetIdentity();
+  const navigate = useNavigate();
   const { restaurants, isLoading, error } = useRestaurantSearch(
     searchQuery,
     cuisineFilter,
@@ -53,6 +59,59 @@ export default function DirectoryPage() {
 
   const handleClearNearby = () => {
     setNearbyRestaurants(null);
+  };
+
+  const handleFeelingLucky = () => {
+    const hiddenGems = restaurants.filter(r => r.isHiddenGem);
+    
+    if (hiddenGems.length === 0) {
+      toast.error('No hidden gems available. Try adjusting your filters!');
+      return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * hiddenGems.length);
+    const luckyRestaurant = hiddenGems[randomIndex];
+    
+    toast.success(`Taking you to ${luckyRestaurant.name}! 🎲`);
+    navigate({ to: '/restaurant/$name', params: { name: luckyRestaurant.name } });
+  };
+
+  const handleSurpriseMe = async () => {
+    setIsSurpriseMeLoading(true);
+    try {
+      // Get user location
+      const userLocation = await getUserLocation();
+      
+      // Filter for hidden gems only
+      const hiddenGems = restaurants.filter(r => r.isHiddenGem);
+      
+      if (hiddenGems.length === 0) {
+        toast.error('No hidden gems available. Try adjusting your filters!');
+        setIsSurpriseMeLoading(false);
+        return;
+      }
+      
+      // Filter by proximity (10 miles)
+      const nearbyHiddenGems = filterByProximity(hiddenGems, userLocation, 10);
+      
+      if (nearbyHiddenGems.length === 0) {
+        toast.error('No hidden gems found within 10 miles of your location. Try "Find Gems Near Me" for a wider search!');
+        setIsSurpriseMeLoading(false);
+        return;
+      }
+      
+      // Pick a random one
+      const randomIndex = Math.floor(Math.random() * nearbyHiddenGems.length);
+      const surpriseRestaurant = nearbyHiddenGems[randomIndex];
+      
+      toast.success(`Surprise! Taking you to ${surpriseRestaurant.name} - ${surpriseRestaurant.distance.toFixed(1)} miles away! 🎉`);
+      navigate({ to: '/restaurant/$name', params: { name: surpriseRestaurant.name } });
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to get your location for surprise selection');
+      console.error('Surprise Me error:', err);
+    } finally {
+      setIsSurpriseMeLoading(false);
+    }
   };
 
   // Show loading state while auth is initializing
@@ -181,11 +240,42 @@ export default function DirectoryPage() {
           {/* Action Buttons Row */}
           <div className="flex flex-wrap gap-3">
             <Button
-              onClick={handleFindNearMe}
-              disabled={isLoadingLocation}
+              onClick={handleSurpriseMe}
+              disabled={isSurpriseMeLoading || isLoading}
               variant="default"
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md"
+              className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground font-bold shadow-lg border-2 border-accent/30"
+            >
+              {isSurpriseMeLoading ? (
+                <>
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                  Finding...
+                </>
+              ) : (
+                <>
+                  <Compass className="h-5 w-5 mr-2" />
+                  Surprise Me
+                </>
+              )}
+            </Button>
+
+            <Button
+              onClick={handleFeelingLucky}
+              disabled={isLoading}
+              variant="default"
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-md"
+            >
+              <Shuffle className="h-5 w-5 mr-2" />
+              I'm Feeling Lucky
+            </Button>
+
+            <Button
+              onClick={handleFindNearMe}
+              disabled={isLoadingLocation}
+              variant="outline"
+              size="lg"
+              className="font-semibold border-2"
             >
               {isLoadingLocation ? (
                 <>
@@ -217,8 +307,8 @@ export default function DirectoryPage() {
               size="lg"
               className={`font-semibold ${
                 seasonalMode
-                  ? 'bg-accent hover:bg-accent/90 text-accent-foreground shadow-md'
-                  : ''
+                  ? 'bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-md'
+                  : 'border-2'
               }`}
             >
               <Sparkles className="h-5 w-5 mr-2" />
@@ -246,8 +336,8 @@ export default function DirectoryPage() {
                 </span>
               )}
               {seasonalMode && (
-                <span className="px-3 py-1 bg-accent/20 text-accent-foreground rounded-full font-medium">
-                  🍑 Seasonal Mode
+                <span className="px-3 py-1 bg-secondary/10 text-secondary rounded-full font-medium">
+                  🍑 Palisade Fruit Season
                 </span>
               )}
             </div>
@@ -259,32 +349,12 @@ export default function DirectoryPage() {
       <div className="container px-4 pb-8">
         {error ? (
           <div className="text-center py-12">
-            <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10 mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-destructive"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
-            </div>
-            <p className="text-destructive font-medium mb-2">Failed to load restaurants</p>
-            <p className="text-sm text-muted-foreground">Please try again later.</p>
+            <p className="text-destructive font-medium">Error loading restaurants. Please try again.</p>
           </div>
         ) : (
-          <RestaurantList 
-            restaurants={displayRestaurants} 
+          <RestaurantList
+            restaurants={displayRestaurants}
             isLoading={isLoading}
-            authError={loginError}
             showDistance={!!nearbyRestaurants}
             seasonalMode={seasonalMode}
           />

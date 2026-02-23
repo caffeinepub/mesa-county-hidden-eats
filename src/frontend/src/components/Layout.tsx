@@ -1,5 +1,5 @@
 import { Outlet, Link } from '@tanstack/react-router';
-import { Utensils, LogIn, LogOut } from 'lucide-react';
+import { Utensils, LogIn, LogOut, User, Stamp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -78,28 +78,47 @@ export default function Layout() {
             </div>
           </Link>
 
-          {/* Login/Logout Button */}
-          <Button
-            onClick={handleAuth}
-            disabled={disabled}
-            variant={isAuthenticated ? "outline" : "default"}
-            size="sm"
-            className="gap-2"
-          >
-            {disabled ? (
-              'Loading...'
-            ) : isAuthenticated ? (
+          {/* Navigation and Auth */}
+          <div className="flex items-center gap-2">
+            {isAuthenticated && (
               <>
-                <LogOut className="h-4 w-4" />
-                Logout
-              </>
-            ) : (
-              <>
-                <LogIn className="h-4 w-4" />
-                Login
+                <Link to="/passport">
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    <Stamp className="h-4 w-4" />
+                    <span className="hidden sm:inline">My Passport</span>
+                  </Button>
+                </Link>
+                <Link to="/profile">
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    <User className="h-4 w-4" />
+                    <span className="hidden sm:inline">My Progress</span>
+                  </Button>
+                </Link>
               </>
             )}
-          </Button>
+
+            <Button
+              onClick={handleAuth}
+              disabled={disabled}
+              variant={isAuthenticated ? "outline" : "default"}
+              size="sm"
+              className="gap-2"
+            >
+              {disabled ? (
+                'Loading...'
+              ) : isAuthenticated ? (
+                <>
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </>
+              ) : (
+                <>
+                  <LogIn className="h-4 w-4" />
+                  Login
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       </header>
 

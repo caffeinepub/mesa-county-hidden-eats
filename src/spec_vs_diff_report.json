@@ -1,20 +1,20 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T06:39:57.493Z",
-  "summary": "The diff demonstrates implementation of all three requirements: the visited button functionality in RestaurantCard.tsx (REQ-43), the restaurant detail page with ratings and notes (REQ-44), and the addition of three new restaurants to backend/main.mo (REQ-45). All requested features appear to be present with appropriate implementation details.",
+  "generatedAt": "2026-02-23T07:38:23.030Z",
+  "summary": "All five requirements (REQ-63 through REQ-67) appear to be fully implemented. The diff shows the addition of 'Hybrid' as a cuisine type in the backend, a new hybrid restaurant entry with the specified details, frontend SearchBar updates to include the Hybrid filter button, filtering logic updates in useRestaurantSearch.ts, and the RestaurantCard component is already configured to render images via the imageURL field. No missing requirements or hallucinated features detected.",
   "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Migration module (backend/migration.mo) for data migration support",
-      "reason": "The BuildRequest does not mention implementing a migration system or migration module. The diff shows a new file 'backend/migration.mo' with data migration types and a run function, which was not requested in any requirement.",
+      "description": "Added a migration.mo module in the backend with comprehensive migration logic to transform old restaurant data structures to new ones, including cuisine type conversion and vibe attribute mapping",
+      "reason": "The BuildRequest does not mention or request any data migration logic. This is additional infrastructure that was not specified in any requirement.",
       "evidence": [
         "backend/migration.mo"
       ]
     },
     {
-      "description": "Migration integration in backend/main.mo actor with 'with migration' clause",
-      "reason": "The diff shows 'with migration = Migration.run' clause added to the actor definition in backend/main.mo. This migration functionality was not requested in the BuildRequest.",
+      "description": "Modified backend/main.mo to include migration import and '(with migration = Migration.run)' syntax",
+      "reason": "The BuildRequest only requested adding 'Hybrid' to the cuisine type and adding a new restaurant entry. Migration setup was not requested and goes beyond the specified scope.",
       "evidence": [
         "backend/main.mo"
       ]
@@ -25,7 +25,9 @@
     "backend/main.mo",
     "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/components/RestaurantCard.tsx",
+    "frontend/src/components/SearchBar.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useRestaurantSearch.ts",
     "project_state.json"
   ]
 }

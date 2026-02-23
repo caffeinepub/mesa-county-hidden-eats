@@ -6,10 +6,10 @@ import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
 import Migration "migration";
 
+// Components
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 
-// Add migration in with clause
 (with migration = Migration.run)
 actor {
   let accessControlState = AccessControl.initState();
@@ -20,9 +20,47 @@ actor {
     longitude : Float;
   };
 
+  public type Cuisine = {
+    #pizza;
+    #mexican;
+    #cafe;
+    #fineDining;
+    #barbecue;
+    #italian;
+    #asianFusion;
+    #coffeeShop;
+    #bar;
+    #pub;
+    #burger;
+    #sandwiches;
+    #seafood;
+    #steakhouse;
+    #brewery;
+    #deli;
+    #market;
+    #hotelRestaurant;
+    #winery;
+    #hybrid;
+  };
+
+  public type VibeAttributes = {
+    artCraftsFocused : Bool;
+    dateNightFriendly : Bool;
+    familyFriendly : Bool;
+    liveMusic : Bool;
+    dogFriendly : Bool;
+    brightOpenSpaces : Bool;
+    perfectLighting : Bool;
+    themedDrinks : Bool;
+    fruitCiderOptions : Bool;
+    mountainViews : Bool;
+    fruitInfusedRecipes : Bool;
+    workFriendly : Bool;
+  };
+
   public type Restaurant = {
     name : Text;
-    cuisine : Text;
+    cuisine : Cuisine;
     description : Text;
     location : Text;
     address : Text;
@@ -33,12 +71,10 @@ actor {
     isNearRiverfrontTrail : Bool;
     isGreatForDate : Bool;
     isPalisadeFruitSeason : Bool;
-    seasonalMonths : [Nat]; // 1-12 (Jan-Dec)
+    seasonalMonths : [Nat];
+    vibeAttributes : VibeAttributes;
+    imageURL : Text;
   };
-
-  type VisitedRestaurants = Map.Map<Text, Bool>;
-  type RestaurantNotes = Map.Map<Text, Text>;
-  type RestaurantRatings = Map.Map<Text, Nat>;
 
   public type UserProfile = {
     name : Text;
@@ -49,7 +85,7 @@ actor {
       "Peche",
       {
         name = "Peche";
-        cuisine = "Fine Dining";
+        cuisine = #fineDining;
         description = "Locally sourced fine dining experience in the heart of Palisade.";
         location = "Palisade";
         address = "336 Main St, Palisade, CO 81526";
@@ -61,13 +97,28 @@ actor {
         isGreatForDate = true;
         isPalisadeFruitSeason = false;
         seasonalMonths = [];
+        vibeAttributes = {
+          artCraftsFocused = false;
+          dateNightFriendly = true;
+          familyFriendly = true;
+          liveMusic = false;
+          dogFriendly = false;
+          brightOpenSpaces = true;
+          perfectLighting = true;
+          themedDrinks = true;
+          fruitCiderOptions = true;
+          mountainViews = false;
+          fruitInfusedRecipes = true;
+          workFriendly = true;
+        };
+        imageURL = "/assets/generated/peche-plating.dim_800x600.png";
       },
     ),
     (
       "Hot Tomato Pizza",
       {
         name = "Hot Tomato Pizza";
-        cuisine = "Pizza";
+        cuisine = #pizza;
         description = "Legendary pizza with a bike-friendly vibe, loved by locals.";
         location = "Fruita";
         address = "124 N Mulberry St, Fruita, CO 81521";
@@ -79,13 +130,28 @@ actor {
         isGreatForDate = true;
         isPalisadeFruitSeason = false;
         seasonalMonths = [];
+        vibeAttributes = {
+          artCraftsFocused = false;
+          dateNightFriendly = true;
+          familyFriendly = true;
+          liveMusic = true;
+          dogFriendly = true;
+          brightOpenSpaces = true;
+          perfectLighting = true;
+          themedDrinks = true;
+          fruitCiderOptions = true;
+          mountainViews = false;
+          fruitInfusedRecipes = true;
+          workFriendly = true;
+        };
+        imageURL = "/assets/generated/hot-tomato-pizza.dim_800x600.png";
       },
     ),
     (
       "Taco Party",
       {
         name = "Taco Party";
-        cuisine = "Mexican";
+        cuisine = #mexican;
         description = "Creative local tacos with a twist, using fresh ingredients.";
         location = "Grand Junction";
         address = "126 S 5th St, Grand Junction, CO 81501";
@@ -97,13 +163,28 @@ actor {
         isGreatForDate = true;
         isPalisadeFruitSeason = false;
         seasonalMonths = [];
+        vibeAttributes = {
+          artCraftsFocused = false;
+          dateNightFriendly = true;
+          familyFriendly = true;
+          liveMusic = true;
+          dogFriendly = true;
+          brightOpenSpaces = true;
+          perfectLighting = true;
+          themedDrinks = true;
+          fruitCiderOptions = true;
+          mountainViews = false;
+          fruitInfusedRecipes = true;
+          workFriendly = true;
+        };
+        imageURL = "/assets/generated/taco-party-cuate.dim_800x600.png";
       },
     ),
     (
       "Best Slope Coffee",
       {
         name = "Best Slope Coffee";
-        cuisine = "Cafe";
+        cuisine = #cafe;
         description = "Artisan coffee shop and community hub in Fruita.";
         location = "Fruita";
         address = "129 N Peach St, Fruita, CO 81521";
@@ -115,13 +196,28 @@ actor {
         isGreatForDate = true;
         isPalisadeFruitSeason = false;
         seasonalMonths = [];
+        vibeAttributes = {
+          artCraftsFocused = false;
+          dateNightFriendly = true;
+          familyFriendly = true;
+          liveMusic = false;
+          dogFriendly = true;
+          brightOpenSpaces = true;
+          perfectLighting = true;
+          themedDrinks = true;
+          fruitCiderOptions = true;
+          mountainViews = false;
+          fruitInfusedRecipes = true;
+          workFriendly = true;
+        };
+        imageURL = "/assets/generated/best-slope-coffee.dim_800x600.png";
       },
     ),
     (
       "Bin 707 Foodbar",
       {
         name = "Bin 707 Foodbar";
-        cuisine = "Fine Dining";
+        cuisine = #fineDining;
         description = "High-end seasonal Colorado cuisine with an extensive wine list.";
         location = "Grand Junction";
         address = "225 N 5th St #105, Grand Junction, CO 81501";
@@ -133,13 +229,61 @@ actor {
         isGreatForDate = true;
         isPalisadeFruitSeason = false;
         seasonalMonths = [];
+        vibeAttributes = {
+          artCraftsFocused = false;
+          dateNightFriendly = true;
+          familyFriendly = true;
+          liveMusic = false;
+          dogFriendly = false;
+          brightOpenSpaces = true;
+          perfectLighting = true;
+          themedDrinks = true;
+          fruitCiderOptions = true;
+          mountainViews = false;
+          fruitInfusedRecipes = true;
+          workFriendly = true;
+        };
+        imageURL = "/assets/generated/fine-dining-cuate.dim_800x600.png";
+      },
+    ),
+    (
+      "Hybrid0",
+      {
+        name = "Hybrid0";
+        cuisine = #hybrid;
+        description = "Serves dirty sodas, twisted teas, and snacks.";
+        location = "Grand Junction";
+        address = "2650 North Ave. unit 117 Grand Junction, CO 81501";
+        contact = "";
+        isHiddenGem = true;
+        coordinates = {
+          latitude = 39.0639;
+          longitude = -108.5506;
+        };
+        isPetFriendly = false;
+        isNearRiverfrontTrail = false;
+        isGreatForDate = true;
+        isPalisadeFruitSeason = false;
+        seasonalMonths = [];
+        vibeAttributes = {
+          artCraftsFocused = true;
+          dateNightFriendly = true;
+          familyFriendly = true;
+          liveMusic = false;
+          dogFriendly = false;
+          brightOpenSpaces = false;
+          perfectLighting = false;
+          themedDrinks = true;
+          fruitCiderOptions = false;
+          mountainViews = false;
+          fruitInfusedRecipes = false;
+          workFriendly = false;
+        };
+        imageURL = "/assets/generated/hybrid-art-studio.dim_800x600.png";
       },
     ),
   ].values());
 
-  let userVisitedRestaurants = Map.empty<Principal, VisitedRestaurants>();
-  let userNotes = Map.empty<Principal, RestaurantNotes>();
-  let userRatings = Map.empty<Principal, RestaurantRatings>();
   let userProfiles = Map.empty<Principal, UserProfile>();
 
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
@@ -167,10 +311,10 @@ actor {
     restaurants.get(name);
   };
 
-  public query ({ caller }) func searchByCuisine(cuisine : Text) : async [Restaurant] {
+  public query ({ caller }) func searchByCuisine(cuisine : Cuisine) : async [Restaurant] {
     let results = List.empty<Restaurant>();
     for ((_, v) in restaurants.entries()) {
-      if (v.cuisine.contains(#text(cuisine))) {
+      if (v.cuisine == cuisine) {
         results.add(v);
       };
     };
@@ -219,147 +363,5 @@ actor {
       };
     };
     results.toArray();
-  };
-
-  public query ({ caller }) func getSeasonalRestaurants() : async [Restaurant] {
-    let results = List.empty<Restaurant>();
-    for ((_, v) in restaurants.entries()) {
-      if (v.isPalisadeFruitSeason) {
-        results.add(v);
-      };
-    };
-    results.toArray();
-  };
-
-  public query ({ caller }) func getSeasonalRestaurantsByMonth(month : Nat) : async [Restaurant] {
-    let results = List.empty<Restaurant>();
-    for ((_, v) in restaurants.entries()) {
-      if (v.isPalisadeFruitSeason) {
-        for (m in v.seasonalMonths.values()) {
-          if (m == month) {
-            results.add(v);
-          };
-        };
-      };
-    };
-    results.toArray();
-  };
-
-  public shared ({ caller }) func addVisitedRestaurant(restaurantName : Text) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can mark restaurants as visited");
-    };
-
-    switch (restaurants.get(restaurantName)) {
-      case (null) {
-        Runtime.trap("Restaurant does not exist");
-      };
-      case (?_) {
-        switch (userVisitedRestaurants.get(caller)) {
-          case (null) {
-            let visited = Map.empty<Text, Bool>();
-            visited.add(restaurantName, true);
-            userVisitedRestaurants.add(caller, visited);
-          };
-          case (?visitedRestaurants) {
-            visitedRestaurants.add(restaurantName, true);
-          };
-        };
-      };
-    };
-  };
-
-  public query ({ caller }) func isRestaurantVisited(restaurantName : Text) : async Bool {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can check visited status");
-    };
-
-    switch (userVisitedRestaurants.get(caller)) {
-      case (null) { false };
-      case (?visitedRestaurants) {
-        switch (visitedRestaurants.get(restaurantName)) {
-          case (null) { false };
-          case (?visited) { visited };
-        };
-      };
-    };
-  };
-
-  public shared ({ caller }) func saveRating(restaurantName : Text, rating : Nat) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can save ratings");
-    };
-
-    if (rating < 1 or rating > 5) {
-      Runtime.trap("Rating must be between 1 and 5");
-    };
-
-    switch (restaurants.get(restaurantName)) {
-      case (null) {
-        Runtime.trap("Restaurant does not exist");
-      };
-      case (?_) {
-        switch (userRatings.get(caller)) {
-          case (null) {
-            let ratings = Map.empty<Text, Nat>();
-            ratings.add(restaurantName, rating);
-            userRatings.add(caller, ratings);
-          };
-          case (?ratings) {
-            ratings.add(restaurantName, rating);
-          };
-        };
-      };
-    };
-  };
-
-  public query ({ caller }) func getRating(restaurantName : Text) : async ?Nat {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can access ratings");
-    };
-
-    switch (userRatings.get(caller)) {
-      case (null) { null };
-      case (?ratings) {
-        ratings.get(restaurantName);
-      };
-    };
-  };
-
-  public shared ({ caller }) func saveNote(restaurantName : Text, note : Text) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can save notes");
-    };
-
-    switch (restaurants.get(restaurantName)) {
-      case (null) {
-        Runtime.trap("Restaurant does not exist");
-      };
-      case (?_) {
-        switch (userNotes.get(caller)) {
-          case (null) {
-            let notes = Map.empty<Text, Text>();
-            notes.add(restaurantName, note);
-            userNotes.add(caller, notes);
-          };
-          case (?notes) {
-            notes.add(restaurantName, note);
-          };
-        };
-      };
-    };
-  };
-
-  public query ({ caller }) func getNote(restaurantName : Text) : async ?Text {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can access notes");
-    };
-
-    switch (userNotes.get(caller)) {
-      case (null) { null };
-      case (?notes) {
-        notes.get(restaurantName);
-      };
-    };
   };
 };

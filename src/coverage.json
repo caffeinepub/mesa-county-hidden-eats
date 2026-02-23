@@ -1,40 +1,58 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T06:39:57.497Z",
+  "generatedAt": "2026-02-23T07:38:23.033Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 1,
+    "total": 5,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-43",
-        "summary": "Update the 'Visited' button in frontend/src/components/RestaurantCard.tsx to turn solid green and display 'Visited' text when clicked, calling the useMarkVisited mutation hook to persist the visited status with the authenticated user's Principal and restaurant identifier",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/RestaurantCard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/RestaurantCard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-44",
-        "summary": "Verify frontend/src/pages/RestaurantDetailPage.tsx displays full restaurant information, includes a 5-star interactive rating selector that allows users to select 1-5 stars, and provides a text input field labeled 'My Private Notes' where users can type and save personal notes about what they ate",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/src/pages/RestaurantDetailPage.tsx"
-        ],
+        "id": "REQ-63",
+        "summary": "Add 'Hybrid' as a new cuisine type option in the Restaurant type definition in backend/main.mo to categorize businesses that serve food/drinks but aren't traditional restaurants",
+        "status": "unknown",
+        "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-45",
-        "summary": "Add three new restaurant entries to the backend/main.mo restaurant data: (1) Taco Party in Grand Junction with cuisine type 'Mexican', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes; (2) Best Slope Coffee in Fruita with cuisine type 'Cafe', a realistic Fruita street address, appropriate coordinates (~39.1586°N 108.7287°W), isHiddenGem set to true, and relevant vibe attributes; (3) Bin 707 Foodbar in Grand Junction with cuisine type 'Fine Dining', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes",
+        "id": "REQ-64",
+        "summary": "Add a new restaurant entry in backend/main.mo with the following details: name appropriate for the address, cuisine type 'Hybrid', address '2650 North Ave. unit 117 Grand Junction, CO 81501', coordinates approximately 39.0639°N 108.5506°W, description 'Serves dirty sodas, twisted teas, and snacks', isHiddenGem set to true, vibe attributes including art/crafts-focused, date night friendly, and family-friendly, and imageURL pointing to 'frontend/public/assets/generated/hybrid-art-studio.dim_800x600.png'",
         "status": "unknown",
         "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-65",
+        "summary": "Update frontend/src/components/SearchBar.tsx to include 'Hybrid' as a cuisine filter button alongside existing cuisine options, maintaining the same visual style and toggle behavior",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/SearchBar.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/SearchBar.tsx"
+        ]
+      },
+      {
+        "id": "REQ-66",
+        "summary": "Update frontend/src/hooks/useRestaurantSearch.ts to include 'Hybrid' in the cuisine filtering logic so restaurants with cuisine type 'Hybrid' are returned when the Hybrid filter is active",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useRestaurantSearch.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useRestaurantSearch.ts"
+        ]
+      },
+      {
+        "id": "REQ-67",
+        "summary": "Render the generated hybrid art studio image (frontend/public/assets/generated/hybrid-art-studio.dim_800x600.png) as a static asset in frontend/src/components/RestaurantCard.tsx using the imageURL field from the new Hybrid restaurant entry",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/RestaurantCard.tsx"
+        ],
         "matchedFiles": []
       }
     ]
@@ -46,7 +64,14 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/RestaurantCard.tsx",
+    "frontend/public/assets/generated/hybrid-art-studio.dim_800x600.png",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/SearchBar.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useRestaurantSearch.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

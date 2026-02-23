@@ -1,89 +1,115 @@
 {
   "kind": "build_request",
-  "title": "Activate visited button, add restaurant detail page with ratings and notes, and add three restaurants to database",
+  "title": "Add Hybrid category and new art studio business",
   "projectName": "Mesa County Hidden Eats",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-43",
-      "text": "Update the 'Visited' button in frontend/src/components/RestaurantCard.tsx to turn solid green and display 'Visited' text when clicked, calling the useMarkVisited mutation hook to persist the visited status with the authenticated user's Principal and restaurant identifier",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "Make it so when a user clicks it, the button turns solid green and says 'Visited.'"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Clicking the 'Mark as Visited' button triggers the useMarkVisited mutation",
-        "After successful mutation, the button changes to solid green background",
-        "The button text changes from 'Mark as Visited' to 'Visited'",
-        "The button state persists across page refreshes using the useIsVisited query"
-      ]
-    },
-    {
-      "id": "REQ-44",
-      "text": "Verify frontend/src/pages/RestaurantDetailPage.tsx displays full restaurant information, includes a 5-star interactive rating selector that allows users to select 1-5 stars, and provides a text input field labeled 'My Private Notes' where users can type and save personal notes about what they ate",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-5"
-        ],
-        "quotes": [
-          "open a detail page that has a 5-star rating selector and a 'My Private Notes' text box where they can type what they ate"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Restaurant detail page is accessible by clicking a restaurant card",
-        "Page displays complete restaurant information including name, cuisine, description, address, and image",
-        "5-star rating component allows user to select a rating from 1 to 5 stars",
-        "Selected rating is saved to backend using useSaveRating mutation",
-        "Text input field labeled 'My Private Notes' accepts user input",
-        "Notes are saved to backend using useSaveNote mutation",
-        "Previously saved ratings and notes are loaded on page mount using useGetRating and useGetNote queries"
-      ]
-    },
-    {
-      "id": "REQ-45",
-      "text": "Add three new restaurant entries to the backend/main.mo restaurant data: (1) Taco Party in Grand Junction with cuisine type 'Mexican', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes; (2) Best Slope Coffee in Fruita with cuisine type 'Cafe', a realistic Fruita street address, appropriate coordinates (~39.1586°N 108.7287°W), isHiddenGem set to true, and relevant vibe attributes; (3) Bin 707 Foodbar in Grand Junction with cuisine type 'Fine Dining', a realistic Grand Junction street address, appropriate coordinates (~39.0639°N 108.5506°W), isHiddenGem set to true, and relevant vibe attributes",
+      "id": "REQ-63",
+      "text": "Add 'Hybrid' as a new cuisine type option in the Restaurant type definition in backend/main.mo to categorize businesses that serve food/drinks but aren't traditional restaurants",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-final"
         ],
         "quotes": [
-          "Please add Taco Party, Best Slope Coffee, and Bin 707 Foodbar to the database now so the home screen is full"
+          "Add a new 'Hybrid' category to the app for businesses that serve food/drinks but aren't traditional restaurants"
         ]
       },
       "acceptanceCriteria": [
-        "Taco Party restaurant entry is added with Mexican cuisine type and Grand Junction location",
-        "Best Slope Coffee restaurant entry is added with Cafe cuisine type and Fruita location",
-        "Bin 707 Foodbar restaurant entry is added with Fine Dining cuisine type and Grand Junction location",
-        "All three restaurants have realistic street addresses matching their city",
-        "All three restaurants have appropriate latitude/longitude coordinates for their location",
-        "All three restaurants have isHiddenGem set to true",
-        "All three restaurants have appropriate vibe attributes (isPetFriendly, isNearRiverfrontTrail, isGreatForDate) set based on their characteristics",
-        "The directory home screen displays all restaurants including the three new entries"
+        "The Restaurant type in backend/main.mo includes 'Hybrid' as a valid cuisine type",
+        "Existing cuisine filtering logic accommodates the new 'Hybrid' category"
+      ]
+    },
+    {
+      "id": "REQ-64",
+      "text": "Add a new restaurant entry in backend/main.mo with the following details: name appropriate for the address, cuisine type 'Hybrid', address '2650 North Ave. unit 117 Grand Junction, CO 81501', coordinates approximately 39.0639°N 108.5506°W, description 'Serves dirty sodas, twisted teas, and snacks', isHiddenGem set to true, vibe attributes including art/crafts-focused, date night friendly, and family-friendly, and imageURL pointing to 'frontend/public/assets/generated/hybrid-art-studio.dim_800x600.png'",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Address 2650 North Ave. unit 117 Grand Junction, CO 81501",
+          "Features: serves dirty, sodas, twisted teas, and snacks",
+          "Tag Hidden gym, art, and crafts, date night, family, friendly"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The new restaurant appears in the backend restaurant list with all specified details",
+        "The restaurant has cuisine type 'Hybrid'",
+        "The restaurant has isHiddenGem set to true",
+        "Vibe attributes reflect art/crafts, date night, and family-friendly characteristics",
+        "The imageURL references the correct generated image path"
+      ]
+    },
+    {
+      "id": "REQ-65",
+      "text": "Update frontend/src/components/SearchBar.tsx to include 'Hybrid' as a cuisine filter button alongside existing cuisine options, maintaining the same visual style and toggle behavior",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Add a new 'Hybrid' category to the app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A 'Hybrid' cuisine filter button appears in the SearchBar component",
+        "The button can be toggled on/off independently like other cuisine filters",
+        "The button styling matches existing cuisine filter buttons"
+      ]
+    },
+    {
+      "id": "REQ-66",
+      "text": "Update frontend/src/hooks/useRestaurantSearch.ts to include 'Hybrid' in the cuisine filtering logic so restaurants with cuisine type 'Hybrid' are returned when the Hybrid filter is active",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Add a new 'Hybrid' category to the app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When the 'Hybrid' cuisine filter is active, only restaurants with cuisine type 'Hybrid' are displayed",
+        "The 'Hybrid' filter works independently and in combination with other active filters"
+      ]
+    },
+    {
+      "id": "REQ-67",
+      "text": "Render the generated hybrid art studio image (frontend/public/assets/generated/hybrid-art-studio.dim_800x600.png) as a static asset in frontend/src/components/RestaurantCard.tsx using the imageURL field from the new Hybrid restaurant entry",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-final"
+        ],
+        "quotes": [
+          "Image: a photo of a modern colorful art studio with a small bar area"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The new Hybrid restaurant displays the generated art studio image",
+        "The image renders correctly in the RestaurantCard component using the imageURL field"
       ]
     }
   ],
   "constraints": [
+    "Do not modify existing restaurant entries in backend/main.mo",
     "Maintain single-actor architecture in backend/main.mo",
-    "Do not modify immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
-    "Use existing React Query hooks (useMarkVisited, useIsVisited, useSaveRating, useGetRating, useSaveNote, useGetNote) defined in frontend/src/hooks/useQueries.ts",
-    "Preserve Western Colorado rustic aesthetic and color palette"
+    "Do not edit immutable frontend paths including useInternetIdentity, useActor, main.tsx, and components/ui"
   ],
   "nonGoals": [
-    "Adding any restaurants beyond the three specified (Taco Party, Best Slope Coffee, Bin 707 Foodbar)",
-    "Modifying existing restaurant entries",
-    "Changing the restaurant detail page route structure",
-    "Adding new authentication methods",
-    "Implementing real-time synchronization"
+    "Modifying the existing cuisine type options beyond adding 'Hybrid'",
+    "Changing the visual design theme or color palette",
+    "Adding new vibe filters beyond those already specified"
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "A photo of a modern colorful art studio with a small bar area serving drinks (hybrid-art-studio.dim_800x600.png)"
+    ],
     "edits": []
   }
 }
